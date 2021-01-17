@@ -17,21 +17,21 @@
   "author": "Robin Genz <mail@robingenz.dev>",
   "license": "MIT",
   "devDependencies": {
-    "@capacitor/android": "^2.4.6",
-    "@capacitor/core": "^2.4.6",
-    "@capacitor/ios": "^2.4.6",
-    "@ionic/prettier-config": "^1.0.0",
-    "@ionic/swiftlint-config": "^1.0.0",
-    "@rollup/plugin-node-resolve": "^8.1.0",
-    "prettier": "^2.0.5",
-    "prettier-plugin-java": "^0.8.0",
-    "rimraf": "^3.0.0",
-    "rollup": "^2.21.0",
-    "swiftlint": "^1.0.1",
-    "typescript": "~3.8.3"
+    "@capacitor/android": "2.4.6",
+    "@capacitor/core": "2.4.6",
+    "@capacitor/ios": "2.4.6",
+    "@ionic/prettier-config": "1.0.0",
+    "@ionic/swiftlint-config": "1.0.0",
+    "@rollup/plugin-node-resolve": "8.1.0",
+    "prettier": "2.0.5",
+    "prettier-plugin-java": "0.8.0",
+    "rimraf": "3.0.0",
+    "rollup": "2.21.0",
+    "swiftlint": "1.0.1",
+    "typescript": "3.8.3"
   },
   "peerDependencies": {
-    "@capacitor/core": "^2.4.6"
+    "@capacitor/core": "2.4.6"
   },
   "files": [
     "dist/",
