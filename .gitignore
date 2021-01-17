@@ -56,6 +56,9 @@ captures/
 *.iml
 .idea
 
+# VSCode
+.vscode
+
 # Keystore files
 # Uncomment the following line if you do not want to check your keystore files in.
 #*.jks
