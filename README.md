@@ -51,7 +51,7 @@ No configuration required for this plugin.
 
 WIP
 
-## API Reference+
+## API Reference
 
 WIP
 
