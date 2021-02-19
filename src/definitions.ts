@@ -51,7 +51,7 @@ export interface AppUpdateInfo {
    * Supported platform(s): Android, iOS  
    * Version code (Android) or CFBundleShortVersionString (iOS) of the update.
    */
-  availableVersion: string | null;
+  availableVersion: string;
   /**
    * Supported platform(s): iOS  
    * Release date of the update in ISO 8601 (UTC) format.
@@ -61,7 +61,7 @@ export interface AppUpdateInfo {
    * Supported platform(s): Android, iOS  
    * `true` if the available version is higher than the current one, otherwise `false`.
    */
-  updateAvailable: boolean;
+  updateAvailability: AppUpdateAvailability;
   /**
    * Supported platform(s): Android
    * In-app update priority for this update, as defined by the developer in the Google Play Developer API.
@@ -74,13 +74,20 @@ export interface AppUpdateInfo {
   appId: string;
 }
 
+export enum AppUpdateAvailability {
+  DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS = 3,
+  UNKNOWN = 0,
+  UPDATE_AVAILABLE = 2,
+  UPDATE_NOT_AVAILABLE = 1,
+}
+
 export interface FlexibleUpdateState {
   /**
    * Flexible in-app update install status.
    */
   installStatus: FlexibleUpdateInstallStatus;
-  bytesDownloaded: number;
-  totalBytesToDownload: number;
+  bytesDownloaded: number | undefined;
+  totalBytesToDownload: number | undefined;
 }
 
 export enum FlexibleUpdateInstallStatus {
