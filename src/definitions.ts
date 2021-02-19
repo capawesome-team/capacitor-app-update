@@ -19,15 +19,19 @@ export interface AppUpdatePlugin {
   openAppStore(): Promise<void>;
   /**
    * Supported platform(s): Android  
-   * Starts an in-app update flow.
-   * @see https://developer.android.com/guide/playcore/in-app-updates#start_update
+   * Performs an immediate in-app update.
    */
-  startInAppUpdate(options: AppUpdateOptions): Promise<void>;
+  performImmediateUpdate(): Promise<void>;
+  /**
+   * Supported platform(s): Android  
+   * Starts a flexible in-app update.
+   */
+  startFlexibleUpdate(options: AppUpdateOptions): Promise<void>;
   /**
    * Supported platform(s): Android  
    * Completes a flexible in-app update by restarting the app.  
    */
-  completeInAppUpdate(): Promise<void>;
+  completeFlexibleUpdate(): Promise<void>;
   /**
    * Flexbile in-app update state change.
    */
@@ -67,7 +71,7 @@ export interface AppUpdateInfo {
    * Supported platform(s): Android, iOS  
    * Package name (Android) or Bundle identifier (iOS).
    */
-  packageName: string;
+  appId: string;
 }
 
 export interface FlexibleUpdateState {
