@@ -1,5 +1,5 @@
 import { registerWebPlugin, WebPlugin } from '@capacitor/core';
-import { AppUpdateInfo, AppUpdatePlugin } from './definitions';
+import { AppUpdateInfo, AppUpdatePlugin, AppUpdateResult } from './definitions';
 
 export class AppUpdateWeb extends WebPlugin implements AppUpdatePlugin {
   constructor() {
@@ -14,6 +14,18 @@ export class AppUpdateWeb extends WebPlugin implements AppUpdatePlugin {
   }
 
   async openAppStore(): Promise<void> {
+    throw new Error('Web platform is not supported.');
+  }
+
+  async performImmediateUpdate(): Promise<AppUpdateResult> {
+    throw new Error('Web platform is not supported.');
+  }
+
+  async startFlexibleUpdate(): Promise<AppUpdateResult> {
+    throw new Error('Web platform is not supported.');
+  }
+
+  async completeFlexibleUpdate(): Promise<void> {
     throw new Error('Web platform is not supported.');
   }
 }
