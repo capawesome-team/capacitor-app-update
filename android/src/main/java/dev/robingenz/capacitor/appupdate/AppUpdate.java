@@ -94,7 +94,7 @@ public class AppUpdate extends Plugin {
 
     @PluginMethod
     public void performImmediateUpdate(PluginCall call) {
-        boolean ready = this.readyForUpdate(AppUpdateType.IMMEDIATE, call);
+        boolean ready = this.readyForUpdate(call, AppUpdateType.IMMEDIATE);
         if (!ready) {
             return;
         }
@@ -108,7 +108,7 @@ public class AppUpdate extends Plugin {
 
     @PluginMethod
     public void startFlexibleUpdate(PluginCall call) {
-        boolean ready = this.readyForUpdate(AppUpdateType.IMMEDIATE, call);
+        boolean ready = this.readyForUpdate(call, AppUpdateType.IMMEDIATE);
         if (!ready) {
             return;
         }
@@ -165,7 +165,7 @@ public class AppUpdate extends Plugin {
         return this.getContext().getPackageManager().getPackageInfo(packageName, 0);
     }
 
-    private boolean readyForUpdate(int appUpdateType, PluginCall call) {
+    private boolean readyForUpdate(PluginCall call, int appUpdateType) {
         if (this.appUpdateInfo == null) {
             call.reject(this.UPDATE_INFO_MISSING);
             return false;
