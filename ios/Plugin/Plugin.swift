@@ -17,19 +17,19 @@ public class AppUpdate: CAPPlugin {
                     let info = Bundle.main.infoDictionary,
                     let bundleId = info["CFBundleIdentifier"] as? String,
                     let currentVersion = info["CFBundleShortVersionString"] as? String,
-                    let url = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)")
+                    let lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)")
                 else {
                     call.reject("Invalid bundle info provided");
                     return;
                 }
-                let data = try Data(contentsOf: url)
+                let data = try Data(contentsOf: lookupUrl)
                 guard
                     let json = try JSONSerialization.jsonObject(with: data, options: [.allowFragments]) as? [String: Any],
                     let result = (json["results"] as? [Any])?.first as? [String: Any],
                     let availableVersion = result["version"] as? String,
                     let availableVersionReleaseDate = result["currentVersionReleaseDate"] as? String
                 else {
-                    call.reject("App update information not found");
+                    call.reject("Required app information could not be fetched");
                     return;
                 }
                 var updateAvailability = AppUpdate.UPDATE_AVAILABILITY_NOT_AVAILABLE
@@ -50,17 +50,33 @@ public class AppUpdate: CAPPlugin {
     }
     
     @objc func openAppStore(_ call: CAPPluginCall) {
-        guard
-            let info = Bundle.main.infoDictionary,
-            let bundleId = info["CFBundleIdentifier"] as? String,
-            let url = URL(string: "itms-apps://itunes.apple.com/app/\(bundleId)")
-        else {
-            call.reject("Invalid bundle info provided");
-            return;
-        }
-        DispatchQueue.main.async {
-            UIApplication.shared.open(url) { (completed) in
-                call.resolve()
+        DispatchQueue.global().async {
+            do {
+                guard
+                    let info = Bundle.main.infoDictionary,
+                    let bundleId = info["CFBundleIdentifier"] as? String,
+                    let lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)")
+                else {
+                    call.reject("Invalid bundle info provided");
+                    return;
+                }
+                let data = try Data(contentsOf: lookupUrl)
+                guard
+                    let json = try JSONSerialization.jsonObject(with: data, options: [.allowFragments]) as? [String: Any],
+                    let result = (json["results"] as? [Any])?.first as? [String: Any],
+                    let trackId = result["trackId"] as? Int,
+                    let storeUrl = URL(string: "itms-apps://itunes.apple.com/app/id\(trackId)")
+                else {
+                    call.reject("Required app information could not be fetched");
+                    return;
+                }
+                DispatchQueue.main.async {
+                    UIApplication.shared.open(storeUrl) { (completed) in
+                        call.resolve()
+                    }
+                }
+            } catch let error {
+                call.reject(error.localizedDescription)
             }
         }
     }
