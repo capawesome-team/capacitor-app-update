@@ -33,18 +33,18 @@ public class AppUpdate extends Plugin {
     protected static final int REQUEST_IMMEDIATE_UPDATE = 10;
     /** Request code for flexible update */
     protected static final int REQUEST_FLEXIBLE_UPDATE = 11;
-    /** Update result: update failed. */
-    public static final String UPDATE_FAILED = "update_failed";
+    /** Update result: update ok. */
+    public static final int UPDATE_OK = 0;
     /** Update result: update canceled. */
-    public static final String UPDATE_CANCELED = "update_canceled";
-    /** Update result: update succeeded. */
-    public static final String UPDATE_OK = "update_ok";
+    public static final int UPDATE_CANCELED = 1;
+    /** Update result: update failed. */
+    public static final int UPDATE_FAILED = 2;
     /** Update result: update not available. */
-    public static final String UPDATE_NOT_AVAILABLE = "update_not_available";
+    public static final int UPDATE_NOT_AVAILABLE = 4;
     /** Update result: update not allowed. */
-    public static final String UPDATE_NOT_ALLOWED = "update_not_allowed";
+    public static final int UPDATE_NOT_ALLOWED = 5;
     /** Update result: update info missing. */
-    public static final String UPDATE_INFO_MISSING = "update_info_missing";
+    public static final int UPDATE_INFO_MISSING = 6;
     private AppUpdateManager appUpdateManager;
     private AppUpdateInfo appUpdateInfo;
     private InstallStateUpdatedListener listener;
@@ -70,7 +70,8 @@ public class AppUpdate extends Plugin {
             ret.put("availableVersion", String.valueOf(appUpdateInfo.availableVersionCode()));
             ret.put("updateAvailability", appUpdateInfo.updateAvailability());
             ret.put("updatePriority", appUpdateInfo.updatePriority());
-            ret.put("appId", pInfo.packageName);
+            ret.put("immediateUpdateAllowed", appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE));
+            ret.put("flexibleUpdateAllowed", appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE));
             call.resolve(ret);
         });
         appUpdateInfoTask.addOnFailureListener(failure -> {
@@ -126,7 +127,6 @@ public class AppUpdate extends Plugin {
             };
             this.appUpdateManager.registerListener(this.listener);
             this.appUpdateManager.startUpdateFlowForResult(this.appUpdateInfo, AppUpdateType.FLEXIBLE, getActivity(), 0);
-            call.resolve();
         } catch (IntentSender.SendIntentException e) {
             call.reject(e.getMessage());
         }
@@ -145,15 +145,16 @@ public class AppUpdate extends Plugin {
         if (savedCall == null) {
             return;
         }
-        if (requestCode == REQUEST_IMMEDIATE_UPDATE) {
-            if (resultCode == RESULT_OK) {
-                savedCall.resolve();
-            } else if (resultCode == RESULT_CANCELED) {
-                savedCall.reject(this.UPDATE_CANCELED);
-            }else if (resultCode == RESULT_IN_APP_UPDATE_FAILED) {
-                savedCall.reject(this.UPDATE_FAILED);
-            }
-        } else if (requestCode == REQUEST_FLEXIBLE_UPDATE) {
+        JSObject ret = new JSObject();
+        if (resultCode == RESULT_OK) {
+            ret.put("code", this.UPDATE_OK);
+        } else if (resultCode == RESULT_CANCELED) {
+            ret.put("code", this.UPDATE_CANCELED);
+        } else if (resultCode == RESULT_IN_APP_UPDATE_FAILED) {
+            ret.put("code", this.UPDATE_FAILED);
+        }
+        savedCall.resolve(ret);
+        if (requestCode == REQUEST_FLEXIBLE_UPDATE) {
             this.appUpdateManager.unregisterListener(this.listener);
             this.listener = null;
         }
@@ -166,16 +167,20 @@ public class AppUpdate extends Plugin {
     }
 
     private boolean readyForUpdate(PluginCall call, int appUpdateType) {
+        JSObject ret = new JSObject();
         if (this.appUpdateInfo == null) {
-            call.reject(this.UPDATE_INFO_MISSING);
+            ret.put("code", this.UPDATE_INFO_MISSING);
+            call.resolve(ret);
             return false;
         }
         if (this.appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
-            call.reject(this.UPDATE_NOT_AVAILABLE);
+            ret.put("code", this.UPDATE_NOT_AVAILABLE);
+            call.resolve(ret);
             return false;
         }
         if (!appUpdateInfo.isUpdateTypeAllowed(appUpdateType)) {
-            call.reject(this.UPDATE_NOT_ALLOWED);
+            ret.put("code", this.UPDATE_NOT_ALLOWED);
+            call.resolve(ret);
             return false;
         }
         return true;
