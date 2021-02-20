@@ -178,7 +178,7 @@ public class AppUpdate extends Plugin {
             call.resolve(ret);
             return false;
         }
-        if (!appUpdateInfo.isUpdateTypeAllowed(appUpdateType)) {
+        if (appUpdateInfo.isUpdateTypeAllowed(appUpdateType) == false) {
             ret.put("code", this.UPDATE_NOT_ALLOWED);
             call.resolve(ret);
             return false;
