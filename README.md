@@ -9,6 +9,9 @@
 
 > 🚧 This project is currently in active development and is not ready to be used. Check back later.
 
+This plugin supports retrieving app update information on **Android** and **iOS**.
+Additionally, this plugin supports [in-app updates](https://developer.android.com/guide/playcore/in-app-updates) on **Android**.
+
 ## Installation
 
 ```
