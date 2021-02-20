@@ -59,7 +59,9 @@ public class AppUpdate: CAPPlugin {
             return;
         }
         DispatchQueue.main.async {
-            UIApplication.shared.open(url)
+            UIApplication.shared.open(url) { (completed) in
+                call.resolve()
+            }
         }
     }
     

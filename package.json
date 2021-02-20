@@ -38,7 +38,7 @@
     "dist/",
     "ios/",
     "android/",
-    "CapacitorAppUpdate.podspec"
+    "RobingenzCapacitorAppUpdate.podspec"
   ],
   "keywords": [
     "capacitor",
