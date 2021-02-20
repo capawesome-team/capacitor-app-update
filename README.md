@@ -5,7 +5,9 @@
 [![npm version](https://img.shields.io/npm/v/@robingenz/capacitor-app-update)](https://www.npmjs.com/package/@robingenz/capacitor-app-update)
 [![license](https://img.shields.io/github/license/robingenz/capacitor-app-update)](https://github.com/robingenz/capacitor-app-update/blob/main/LICENSE)
 
-⚡️ [Capacitor](https://capacitorjs.com/) plugin that assists with app updates.  
+⚡️ [Capacitor](https://capacitorjs.com/) plugin that assists with app updates.
+
+> 🚧 This project is currently in active development and is not ready to be used. Check back later.
 
 ## Installation
 
@@ -49,11 +51,56 @@ No configuration required for this plugin.
 
 ## Usage
 
-WIP
+```js
+import { Plugins } from '@capacitor/core';
+import '@robingenz/capacitor-app-update';
 
-## API Reference
+const getCurrentAppVersion = async () => {
+  const info = await Plugins.AppUpdate.getAppUpdateInfo();
+  return info.currentVersion;
+};
 
-WIP
+const getAvailableAppVersion = async () => {
+  const info = await Plugins.AppUpdate.getAppUpdateInfo();
+  return info.availableVersion;
+};
+
+const openAppStore = async () => {
+  await Plugins.AppUpdate.openAppStore();
+};
+
+const performImmediateUpdate = async () => {
+  const info = await Plugins.AppUpdate.getAppUpdateInfo();
+  if (info.updateAvailability !== AppUpdateAvailability.UPDATE_AVAILABLE) {
+    return;
+  }
+  if (!info.immediateUpdateAllowed) {
+    return;
+  }
+  await Plugins.AppUpdate.performImmediateUpdate();
+};
+
+const startFlexibleUpdate = async () => {
+  const info = await Plugins.AppUpdate.getAppUpdateInfo();
+  if (info.updateAvailability !== AppUpdateAvailability.UPDATE_AVAILABLE) {
+    return;
+  }
+  if (!info.flexibleUpdateAllowed) {
+    return;
+  }
+  await Plugins.AppUpdate.startFlexibleUpdate();
+};
+
+const completeFlexibleUpdate = async () => {
+  await Plugins.AppUpdate.completeFlexibleUpdate();
+};
+```
+
+## API
+
+🚧 WIP
+
+For now, you can take a look at the [definitions.ts](https://github.com/robingenz/capacitor-app-update/blob/main/src/definitions.ts) file.
 
 ## Changelog
 
