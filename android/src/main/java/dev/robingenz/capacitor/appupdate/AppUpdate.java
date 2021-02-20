@@ -10,6 +10,7 @@ import android.content.IntentSender;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import androidx.appcompat.app.AppCompatActivity;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
@@ -37,11 +38,11 @@ public class AppUpdate extends Plugin {
     /** Update result: update failed. */
     public static final int UPDATE_FAILED = 2;
     /** Update result: update not available. */
-    public static final int UPDATE_NOT_AVAILABLE = 4;
+    public static final int UPDATE_NOT_AVAILABLE = 3;
     /** Update result: update not allowed. */
-    public static final int UPDATE_NOT_ALLOWED = 5;
+    public static final int UPDATE_NOT_ALLOWED = 4;
     /** Update result: update info missing. */
-    public static final int UPDATE_INFO_MISSING = 6;
+    public static final int UPDATE_INFO_MISSING = 5;
     private AppUpdateManager appUpdateManager;
     private AppUpdateInfo appUpdateInfo;
     private InstallStateUpdatedListener listener;
