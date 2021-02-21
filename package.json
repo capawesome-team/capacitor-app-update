@@ -35,10 +35,11 @@
     "@capacitor/core": "2.4.6"
   },
   "files": [
+    "android/src/main/",
+    "android/build.gradle",
     "dist/",
-    "ios/",
-    "android/",
-    "CapacitorAppUpdate.podspec"
+    "ios/Plugin/",
+    "RobingenzCapacitorAppUpdate.podspec"
   ],
   "keywords": [
     "capacitor",
