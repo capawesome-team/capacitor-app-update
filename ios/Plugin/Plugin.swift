@@ -19,8 +19,8 @@ public class AppUpdate: CAPPlugin {
                     let currentVersion = info["CFBundleShortVersionString"] as? String,
                     let lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)")
                 else {
-                    call.reject("Invalid bundle info provided");
-                    return;
+                    call.reject("Invalid bundle info provided")
+                    return
                 }
                 let data = try Data(contentsOf: lookupUrl)
                 guard
@@ -29,8 +29,8 @@ public class AppUpdate: CAPPlugin {
                     let availableVersion = result["version"] as? String,
                     let availableVersionReleaseDate = result["currentVersionReleaseDate"] as? String
                 else {
-                    call.reject("Required app information could not be fetched");
-                    return;
+                    call.reject("Required app information could not be fetched")
+                    return
                 }
                 var updateAvailability = AppUpdate.UPDATE_AVAILABILITY_NOT_AVAILABLE
                 let updateAvailable = self.compareVersions(currentVersion, availableVersion) == .orderedDescending
@@ -41,14 +41,14 @@ public class AppUpdate: CAPPlugin {
                     "currentVersion": currentVersion,
                     "availableVersion": availableVersion,
                     "availableVersionReleaseDate": availableVersionReleaseDate,
-                    "updateAvailability": updateAvailability,
+                    "updateAvailability": updateAvailability
                 ])
             } catch let error {
                 call.reject(error.localizedDescription)
             }
         }
     }
-    
+
     @objc func openAppStore(_ call: CAPPluginCall) {
         DispatchQueue.global().async {
             do {
@@ -57,8 +57,8 @@ public class AppUpdate: CAPPlugin {
                     let bundleId = info["CFBundleIdentifier"] as? String,
                     let lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)")
                 else {
-                    call.reject("Invalid bundle info provided");
-                    return;
+                    call.reject("Invalid bundle info provided")
+                    return
                 }
                 let data = try Data(contentsOf: lookupUrl)
                 guard
@@ -67,11 +67,11 @@ public class AppUpdate: CAPPlugin {
                     let trackId = result["trackId"] as? Int,
                     let storeUrl = URL(string: "itms-apps://itunes.apple.com/app/id\(trackId)")
                 else {
-                    call.reject("Required app information could not be fetched");
-                    return;
+                    call.reject("Required app information could not be fetched")
+                    return
                 }
                 DispatchQueue.main.async {
-                    UIApplication.shared.open(storeUrl) { (completed) in
+                    UIApplication.shared.open(storeUrl) { (_) in
                         call.resolve()
                     }
                 }
@@ -80,19 +80,19 @@ public class AppUpdate: CAPPlugin {
             }
         }
     }
-    
+
     @objc func performImmediateUpdate(_ call: CAPPluginCall) {
         call.reject("Not available on iOS")
     }
-    
+
     @objc func startFlexibleUpdate(_ call: CAPPluginCall) {
         call.reject("Not available on iOS")
     }
-    
+
     @objc func completeFlexibleUpdate(_ call: CAPPluginCall) {
         call.reject("Not available on iOS")
     }
-    
+
     @objc func compareVersions(_ currentVersion: String, _ availableVersion: String) -> ComparisonResult {
         return availableVersion.compare(currentVersion, options: .numeric)
     }
