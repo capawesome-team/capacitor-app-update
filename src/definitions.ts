@@ -33,7 +33,7 @@ export interface AppUpdatePlugin {
    */
   completeFlexibleUpdate(): Promise<void>;
   /**
-   * Flexbile in-app update state change.
+   * Adds a flexbile in-app update state change listener.
    */
   addListener(
     eventName: 'onFlexibleUpdateStateChange',
