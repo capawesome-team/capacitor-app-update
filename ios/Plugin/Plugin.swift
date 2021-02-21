@@ -7,8 +7,8 @@ import Capacitor
  */
 @objc(AppUpdate)
 public class AppUpdate: CAPPlugin {
-    private static let UPDATE_AVAILABILITY_NOT_AVAILABLE = 1
-    private static let UPDATE_AVAILABILITY_AVAILABLE = 2
+    private static let updateAvailabilityNotAvailable = 1
+    private static let updateAvailabilityAvailable = 2
 
     @objc func getAppUpdateInfo(_ call: CAPPluginCall) {
         DispatchQueue.global().async {
@@ -32,10 +32,10 @@ public class AppUpdate: CAPPlugin {
                     call.reject("Required app information could not be fetched")
                     return
                 }
-                var updateAvailability = AppUpdate.UPDATE_AVAILABILITY_NOT_AVAILABLE
+                var updateAvailability = AppUpdate.updateAvailabilityNotAvailable
                 let updateAvailable = self.compareVersions(currentVersion, availableVersion) == .orderedDescending
                 if updateAvailable {
-                    updateAvailability = AppUpdate.UPDATE_AVAILABILITY_AVAILABLE
+                    updateAvailability = AppUpdate.updateAvailabilityAvailable
                 }
                 call.resolve([
                     "currentVersion": currentVersion,
