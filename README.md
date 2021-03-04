@@ -58,20 +58,36 @@ No configuration required for this plugin.
 import { Plugins } from '@capacitor/core';
 import '@robingenz/capacitor-app-update';
 
+/**
+ * Supported platform(s): Android, iOS
+ * Returns current app version.
+ */
 const getCurrentAppVersion = async () => {
   const info = await Plugins.AppUpdate.getAppUpdateInfo();
   return info.currentVersion;
 };
 
+/**
+ * Supported platform(s): Android, iOS
+ * Returns available app version.
+ */
 const getAvailableAppVersion = async () => {
   const info = await Plugins.AppUpdate.getAppUpdateInfo();
   return info.availableVersion;
 };
 
+/**
+ * Supported platform(s): Android, iOS
+ * Opens the app store entry of the app in the Play Store (Android) or App Store (iOS).
+ */
 const openAppStore = async () => {
   await Plugins.AppUpdate.openAppStore();
 };
 
+/**
+ * Supported platform(s): Android
+ * Performs an immediate in-app update.
+ */
 const performImmediateUpdate = async () => {
   const info = await Plugins.AppUpdate.getAppUpdateInfo();
   if (info.updateAvailability !== AppUpdateAvailability.UPDATE_AVAILABLE) {
@@ -83,6 +99,10 @@ const performImmediateUpdate = async () => {
   await Plugins.AppUpdate.performImmediateUpdate();
 };
 
+/**
+ * Supported platform(s): Android
+ * Starts a flexible in-app update.
+ */
 const startFlexibleUpdate = async () => {
   const info = await Plugins.AppUpdate.getAppUpdateInfo();
   if (info.updateAvailability !== AppUpdateAvailability.UPDATE_AVAILABLE) {
@@ -94,6 +114,10 @@ const startFlexibleUpdate = async () => {
   await Plugins.AppUpdate.startFlexibleUpdate();
 };
 
+/**
+ * Supported platform(s): Android
+ * Completes a flexible in-app update by restarting the app.
+ */
 const completeFlexibleUpdate = async () => {
   await Plugins.AppUpdate.completeFlexibleUpdate();
 };
