@@ -123,6 +123,10 @@ const completeFlexibleUpdate = async () => {
 };
 ```
 
+## Test with internal app-sharing
+
+The Android Developers documentation describes how to test [in-app updates](https://developer.android.com/guide/playcore/in-app-updates) using [internal app sharing](https://support.google.com/googleplay/android-developer/answer/9303479): https://developer.android.com/guide/playcore/in-app-updates#internal-app-sharing
+
 ## API
 
 🚧 WIP
