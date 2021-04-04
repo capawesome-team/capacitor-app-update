@@ -1,51 +1,38 @@
-# capacitor-app-update
+<p align="center"><br><img src="https://user-images.githubusercontent.com/236501/85893648-1c92e880-b7a8-11ea-926d-95355b8175c7.png" width="128" height="128" /></p>
+<h3 align="center">App Update</h3>
+<p align="center"><strong><code>@robingenz/capacitor-app-update</code></strong></p>
+<p align="center">
+  Capacitor plugin that assists with app updates.
+</p>
 
-[![maintenance](https://img.shields.io/maintenance/yes/2021)](https://github.com/robingenz/capacitor-app-update)
-[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/robingenz/capacitor-app-update/CI/main)](https://github.com/robingenz/capacitor-app-update/actions?query=workflow%3ACI)
-[![npm version](https://img.shields.io/npm/v/@robingenz/capacitor-app-update)](https://www.npmjs.com/package/@robingenz/capacitor-app-update)
-[![license](https://img.shields.io/github/license/robingenz/capacitor-app-update)](https://github.com/robingenz/capacitor-app-update/blob/main/LICENSE)
-
-⚡️ [Capacitor](https://capacitorjs.com/) plugin that assists with app updates.
+<p align="center">
+  <img src="https://img.shields.io/maintenance/yes/2021?style=flat-square" />
+  <a href="https://github.com/robingenz/capacitor-app-update/actions?query=workflow%3A%22CI%22"><img src="https://img.shields.io/github/workflow/status/robingenz/capacitor-app-update/CI/main?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@robingenz/capacitor-app-update"><img src="https://img.shields.io/npm/l/@robingenz/capacitor-app-update?style=flat-square" /></a>
+<br>
+  <a href="https://www.npmjs.com/package/@robingenz/capacitor-app-update"><img src="https://img.shields.io/npm/dw/@robingenz/capacitor-app-update?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@robingenz/capacitor-app-update"><img src="https://img.shields.io/npm/v/@robingenz/capacitor-app-update?style=flat-square" /></a>
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+<a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-1-orange?style=flat-square" /></a>
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+</p>
 
 > 🚧 This project is currently under active development and has not yet been sufficiently tested. It might be changed in backward-incompatible ways.
 
 This plugin supports retrieving app update information on **Android** and **iOS**.  
 Additionally, this plugin supports [in-app updates](https://developer.android.com/guide/playcore/in-app-updates) on **Android**.
 
+## Maintainers
+
+| Maintainer | GitHub                                    | Social                                        |
+| ---------- | ----------------------------------------- | --------------------------------------------- |
+| Robin Genz | [robingenz](https://github.com/robingenz) | [@robin_genz](https://twitter.com/robin_genz) |
+
 ## Installation
 
-```
+```bash
 npm install @robingenz/capacitor-app-update
 npx cap sync
-```
-
-On **iOS**, no further steps are needed.
-
-On **Android**, register the plugin in your main activity:
-
-```java
-import dev.robingenz.capacitor.appupdate.AppUpdate;
-
-public class MainActivity extends BridgeActivity {
-
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    // Initializes the Bridge
-    this.init(
-        savedInstanceState,
-        new ArrayList<Class<? extends Plugin>>() {
-
-          {
-            // Additional plugins you've installed go here
-            // Ex: add(TotallyAwesomePlugin.class);
-            add(AppUpdate.class);
-          }
-        }
-      );
-  }
-}
 ```
 
 ## Configuration
@@ -54,89 +41,67 @@ No configuration required for this plugin.
 
 ## Usage
 
-```js
-import { Plugins } from '@capacitor/core';
-import '@robingenz/capacitor-app-update';
+```typescript
+import { AppUpdate } from '@robingenz/capacitor-app-update';
 
-/**
- * Supported platform(s): Android, iOS
- * Returns current app version.
- */
 const getCurrentAppVersion = async () => {
-  const info = await Plugins.AppUpdate.getAppUpdateInfo();
+  const info = await AppUpdate.getAppUpdateInfo();
   return info.currentVersion;
 };
 
-/**
- * Supported platform(s): Android, iOS
- * Returns available app version.
- */
 const getAvailableAppVersion = async () => {
-  const info = await Plugins.AppUpdate.getAppUpdateInfo();
+  const info = await AppUpdate.getAppUpdateInfo();
   return info.availableVersion;
 };
 
-/**
- * Supported platform(s): Android, iOS
- * Opens the app store entry of the app in the Play Store (Android) or App Store (iOS).
- */
 const openAppStore = async () => {
-  await Plugins.AppUpdate.openAppStore();
+  await AppUpdate.openAppStore();
 };
 
-/**
- * Supported platform(s): Android
- * Performs an immediate in-app update.
- */
 const performImmediateUpdate = async () => {
-  const info = await Plugins.AppUpdate.getAppUpdateInfo();
+  const info = await AppUpdate.getAppUpdateInfo();
   if (info.updateAvailability !== AppUpdateAvailability.UPDATE_AVAILABLE) {
     return;
   }
   if (!info.immediateUpdateAllowed) {
     return;
   }
-  await Plugins.AppUpdate.performImmediateUpdate();
+  await AppUpdate.performImmediateUpdate();
 };
 
-/**
- * Supported platform(s): Android
- * Starts a flexible in-app update.
- */
 const startFlexibleUpdate = async () => {
-  const info = await Plugins.AppUpdate.getAppUpdateInfo();
+  const info = await AppUpdate.getAppUpdateInfo();
   if (info.updateAvailability !== AppUpdateAvailability.UPDATE_AVAILABLE) {
     return;
   }
   if (!info.flexibleUpdateAllowed) {
     return;
   }
-  await Plugins.AppUpdate.startFlexibleUpdate();
+  await AppUpdate.startFlexibleUpdate();
 };
 
-/**
- * Supported platform(s): Android
- * Completes a flexible in-app update by restarting the app.
- */
 const completeFlexibleUpdate = async () => {
-  await Plugins.AppUpdate.completeFlexibleUpdate();
+  await AppUpdate.completeFlexibleUpdate();
 };
 ```
+
+## API
+
+<docgen-index>
+</docgen-index>
+
+<docgen-api>
+<!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
+</docgen-api>
 
 ## Test with internal app-sharing
 
 The Android Developers documentation describes how to test [in-app updates](https://developer.android.com/guide/playcore/in-app-updates) using [internal app sharing](https://support.google.com/googleplay/android-developer/answer/9303479): https://developer.android.com/guide/playcore/in-app-updates#internal-app-sharing
 
-## API
-
-🚧 WIP
-
-For now, you can take a look at the [definitions.ts](https://github.com/robingenz/capacitor-app-update/blob/main/src/definitions.ts) file.
-
 ## Changelog
 
-See [CHANGELOG.md](https://github.com/robingenz/capacitor-app-update/blob/main/CHANGELOG.md).
+See [CHANGELOG.md](https://github.com/robingenz/capacitor-app-update/blob/master/CHANGELOG.md).
 
 ## License
 
-See [LICENSE](https://github.com/robingenz/capacitor-app-update/blob/main/LICENSE).
+See [LICENSE](https://github.com/robingenz/capacitor-app-update/blob/master/LICENSE).

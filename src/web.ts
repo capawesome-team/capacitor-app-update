@@ -1,14 +1,8 @@
-import { registerWebPlugin, WebPlugin } from '@capacitor/core';
-import { AppUpdateInfo, AppUpdatePlugin, AppUpdateResult } from './definitions';
+import { WebPlugin } from '@capacitor/core';
+
+import type { AppUpdateInfo, AppUpdatePlugin, AppUpdateResult } from './definitions';
 
 export class AppUpdateWeb extends WebPlugin implements AppUpdatePlugin {
-  constructor() {
-    super({
-      name: 'AppUpdate',
-      platforms: ['web'],
-    });
-  }
-
   async getAppUpdateInfo(): Promise<AppUpdateInfo> {
     throw new Error('Web platform is not supported.');
   }
@@ -29,9 +23,3 @@ export class AppUpdateWeb extends WebPlugin implements AppUpdatePlugin {
     throw new Error('Web platform is not supported.');
   }
 }
-
-const AppUpdate = new AppUpdateWeb();
-
-export { AppUpdate };
-
-registerWebPlugin(AppUpdate);
