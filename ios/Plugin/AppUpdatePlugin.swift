@@ -5,8 +5,8 @@ import Capacitor
  * Please read the Capacitor iOS Plugin Development Guide
  * here: https://capacitorjs.com/docs/plugins/ios
  */
-@objc(AppUpdate)
-public class AppUpdate: CAPPlugin {
+@objc(AppUpdatePlugin)
+public class AppUpdatePlugin: CAPPlugin {
     private static let updateAvailabilityNotAvailable = 1
     private static let updateAvailabilityAvailable = 2
 
