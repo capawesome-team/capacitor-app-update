@@ -10,7 +10,6 @@ import android.content.IntentSender;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import androidx.appcompat.app.AppCompatActivity;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
@@ -25,8 +24,8 @@ import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
 
-@CapacitorPlugin(name = "AppUpdate", requestCodes = { AppUpdate.REQUEST_IMMEDIATE_UPDATE, AppUpdate.REQUEST_FLEXIBLE_UPDATE })
-public class AppUpdate extends Plugin {
+@NativePlugin(name = "AppUpdate", requestCodes = { AppUpdatePlugin.REQUEST_IMMEDIATE_UPDATE, AppUpdatePlugin.REQUEST_FLEXIBLE_UPDATE })
+public class AppUpdatePlugin extends Plugin {
     public static final String ERROR_GET_APP_INFO_FAILED = "Unable to get app info.";
     /** Update result: update ok. */
     public static final int UPDATE_OK = 0;
@@ -108,7 +107,7 @@ public class AppUpdate extends Plugin {
                     this.appUpdateInfo,
                     AppUpdateType.IMMEDIATE,
                     getActivity(),
-                    AppUpdate.REQUEST_IMMEDIATE_UPDATE
+                    AppUpdatePlugin.REQUEST_IMMEDIATE_UPDATE
                 );
         } catch (IntentSender.SendIntentException e) {
             call.reject(e.getMessage());
@@ -139,7 +138,7 @@ public class AppUpdate extends Plugin {
                     this.appUpdateInfo,
                     AppUpdateType.FLEXIBLE,
                     getActivity(),
-                    AppUpdate.REQUEST_FLEXIBLE_UPDATE
+                    AppUpdatePlugin.REQUEST_FLEXIBLE_UPDATE
                 );
         } catch (IntentSender.SendIntentException e) {
             call.reject(e.getMessage());
