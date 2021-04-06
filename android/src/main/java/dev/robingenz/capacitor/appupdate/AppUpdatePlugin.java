@@ -104,7 +104,12 @@ public class AppUpdate extends Plugin {
         }
         saveCall(call);
         try {
-            this.appUpdateManager.startUpdateFlowForResult(this.appUpdateInfo, AppUpdateType.IMMEDIATE, getActivity(), 0);
+            this.appUpdateManager.startUpdateFlowForResult(
+                    this.appUpdateInfo,
+                    AppUpdateType.IMMEDIATE,
+                    getActivity(),
+                    AppUpdate.REQUEST_IMMEDIATE_UPDATE
+                );
         } catch (IntentSender.SendIntentException e) {
             call.reject(e.getMessage());
         }
@@ -130,7 +135,12 @@ public class AppUpdate extends Plugin {
                     notifyListeners("onFlexibleUpdateStateChange", ret);
                 };
             this.appUpdateManager.registerListener(this.listener);
-            this.appUpdateManager.startUpdateFlowForResult(this.appUpdateInfo, AppUpdateType.FLEXIBLE, getActivity(), 0);
+            this.appUpdateManager.startUpdateFlowForResult(
+                    this.appUpdateInfo,
+                    AppUpdateType.FLEXIBLE,
+                    getActivity(),
+                    AppUpdate.REQUEST_FLEXIBLE_UPDATE
+                );
         } catch (IntentSender.SendIntentException e) {
             call.reject(e.getMessage());
         }

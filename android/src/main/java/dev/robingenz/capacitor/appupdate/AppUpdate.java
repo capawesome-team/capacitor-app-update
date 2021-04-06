@@ -7,7 +7,6 @@ import android.content.IntentSender;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-
 import com.getcapacitor.Bridge;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.PluginCall;
@@ -34,16 +33,16 @@ public class AppUpdate {
     public void getAppUpdateInfo(AppUpdateInfoResultCallback resultCallback) {
         Task<AppUpdateInfo> appUpdateInfoTask = this.appUpdateManager.getAppUpdateInfo();
         appUpdateInfoTask.addOnSuccessListener(
-                appUpdateInfo -> {
-                    this.appUpdateInfo = appUpdateInfo;
-                    resultCallback.onDone(appUpdateInfo);
-                }
+            appUpdateInfo -> {
+                this.appUpdateInfo = appUpdateInfo;
+                resultCallback.onDone(appUpdateInfo);
+            }
         );
         appUpdateInfoTask.addOnFailureListener(
-                failure -> {
-                    String message = failure.getMessage();
-                    resultCallback.onError(message);
-                }
+            failure -> {
+                String message = failure.getMessage();
+                resultCallback.onError(message);
+            }
         );
     }
 
