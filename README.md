@@ -35,6 +35,12 @@ npm install @robingenz/capacitor-app-update
 npx cap sync
 ```
 
+### Android Variables
+
+This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
+
+- `$androidPlayCore` version of `com.google.android.play:core` (default: `1.7.2`)
+
 ## Configuration
 
 No configuration required for this plugin.
