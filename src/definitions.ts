@@ -2,28 +2,33 @@ import type { PluginListenerHandle } from "@capacitor/core";
 
 export interface AppUpdatePlugin {
   /**
-   * Supported platform(s): Android, iOS
    * Returns app update informations.
+   * 
+   * Only available for Android and iOS.
    */
    getAppUpdateInfo(): Promise<AppUpdateInfo>;
    /**
-    * Supported platform(s): Android, iOS
     * Opens the app store entry of the app in the Play Store (Android) or App Store (iOS).
+    * 
+    * Only available for Android and iOS.
     */
    openAppStore(): Promise<void>;
    /**
-    * Supported platform(s): Android
     * Performs an immediate in-app update.
+    * 
+    * Only available for Android.
     */
    performImmediateUpdate(): Promise<AppUpdateResult>;
    /**
-    * Supported platform(s): Android
     * Starts a flexible in-app update.
+    * 
+    * Only available for Android.
     */
    startFlexibleUpdate(): Promise<AppUpdateResult>;
    /**
-    * Supported platform(s): Android
     * Completes a flexible in-app update by restarting the app.
+    * 
+    * Only available for Android.
     */
    completeFlexibleUpdate(): Promise<void>;
    /**
@@ -37,38 +42,45 @@ export interface AppUpdatePlugin {
  
  export interface AppUpdateInfo {
    /**
-    * Supported platform(s): Android, iOS
     * Version code (Android) or CFBundleShortVersionString (iOS) of the currently installed app version.
+    * 
+    * Only available for Android and iOS.
     */
    currentVersion: string;
    /**
-    * Supported platform(s): Android, iOS
     * Version code (Android) or CFBundleShortVersionString (iOS) of the update.
+    * 
+    * Only available for Android and iOS.
     */
    availableVersion: string;
    /**
-    * Supported platform(s): iOS
     * Release date of the update in ISO 8601 (UTC) format.
+    * 
+    * Only available for iOS.
     */
    availableVersionReleaseDate?: string;
    /**
-    * Supported platform(s): Android, iOS
     * The app update availability.
+    * 
+    * Only available for Android and iOS.
     */
    updateAvailability: AppUpdateAvailability;
    /**
-    * Supported platform(s): Android
     * In-app update priority for this update, as defined by the developer in the Google Play Developer API.
+    * 
+    * Only available for Android.
     */
    updatePriority?: number;
    /**
-    * Supported platform(s): Android
     * `true` if an immediate update is allowed, otherwise `false`.
+    * 
+    * Only available for Android.
     */
    immediateUpdateAllowed?: boolean;
    /**
-    * Supported platform(s): Android
     * `true` if a flexible update is allowed, otherwise `false`.
+    * 
+    * Only available for Android.
     */
    flexibleUpdateAllowed?: boolean;
  }
