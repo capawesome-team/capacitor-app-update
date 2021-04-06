@@ -39,7 +39,7 @@ npx cap sync
 
 This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
 
-- `$androidPlayCore` version of `com.google.android.play:core` (default: `1.7.2`)
+- `$androidPlayCore` version of `com.google.android.play:core` (default: `1.9.0`)
 
 ## Configuration
 
@@ -95,14 +95,14 @@ const completeFlexibleUpdate = async () => {
 
 <docgen-index>
 
-* [`getAppUpdateInfo()`](#getappupdateinfo)
-* [`openAppStore()`](#openappstore)
-* [`performImmediateUpdate()`](#performimmediateupdate)
-* [`startFlexibleUpdate()`](#startflexibleupdate)
-* [`completeFlexibleUpdate()`](#completeflexibleupdate)
-* [`addListener('onFlexibleUpdateStateChange', ...)`](#addlisteneronflexibleupdatestatechange-)
-* [Interfaces](#interfaces)
-* [Enums](#enums)
+- [`getAppUpdateInfo()`](#getappupdateinfo)
+- [`openAppStore()`](#openappstore)
+- [`performImmediateUpdate()`](#performimmediateupdate)
+- [`startFlexibleUpdate()`](#startflexibleupdate)
+- [`completeFlexibleUpdate()`](#completeflexibleupdate)
+- [`addListener('onFlexibleUpdateStateChange', ...)`](#addlisteneronflexibleupdatestatechange-)
+- [Interfaces](#interfaces)
+- [Enums](#enums)
 
 </docgen-index>
 
@@ -120,8 +120,7 @@ Returns app update informations.
 
 **Returns:** <code>Promise&lt;<a href="#appupdateinfo">AppUpdateInfo</a>&gt;</code>
 
---------------------
-
+---
 
 ### openAppStore()
 
@@ -132,8 +131,7 @@ openAppStore() => Promise<void>
 Supported platform(s): Android, iOS
 Opens the app store entry of the app in the Play Store (Android) or App Store (iOS).
 
---------------------
-
+---
 
 ### performImmediateUpdate()
 
@@ -146,8 +144,7 @@ Performs an immediate in-app update.
 
 **Returns:** <code>Promise&lt;<a href="#appupdateresult">AppUpdateResult</a>&gt;</code>
 
---------------------
-
+---
 
 ### startFlexibleUpdate()
 
@@ -160,8 +157,7 @@ Starts a flexible in-app update.
 
 **Returns:** <code>Promise&lt;<a href="#appupdateresult">AppUpdateResult</a>&gt;</code>
 
---------------------
-
+---
 
 ### completeFlexibleUpdate()
 
@@ -172,8 +168,7 @@ completeFlexibleUpdate() => Promise<void>
 Supported platform(s): Android
 Completes a flexible in-app update by restarting the app.
 
---------------------
-
+---
 
 ### addListener('onFlexibleUpdateStateChange', ...)
 
@@ -190,11 +185,9 @@ Adds a flexbile in-app update state change listener.
 
 **Returns:** <code><a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
 
---------------------
-
+---
 
 ### Interfaces
-
 
 #### AppUpdateInfo
 
@@ -208,20 +201,17 @@ Adds a flexbile in-app update state change listener.
 | **`immediateUpdateAllowed`**      | <code>boolean</code>                                                    | Supported platform(s): Android `true` if an immediate update is allowed, otherwise `false`.                                            |
 | **`flexibleUpdateAllowed`**       | <code>boolean</code>                                                    | Supported platform(s): Android `true` if a flexible update is allowed, otherwise `false`.                                              |
 
-
 #### AppUpdateResult
 
 | Prop       | Type                                                                |
 | ---------- | ------------------------------------------------------------------- |
 | **`code`** | <code><a href="#appupdateresultcode">AppUpdateResultCode</a></code> |
 
-
 #### PluginListenerHandle
 
 | Prop         | Type                                      |
 | ------------ | ----------------------------------------- |
 | **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
-
 
 #### FlexibleUpdateState
 
@@ -231,9 +221,7 @@ Adds a flexbile in-app update state change listener.
 | **`bytesDownloaded`**      | <code>number</code>                                                                 | Returns the number of bytes downloaded so far. `undefined` if the install status is other than `DOWNLOADING`.                      |
 | **`totalBytesToDownload`** | <code>number</code>                                                                 | Returns the total number of bytes to be downloaded for this update. `undefined` if the install status is other than `DOWNLOADING`. |
 
-
 ### Enums
-
 
 #### AppUpdateAvailability
 
@@ -243,7 +231,6 @@ Adds a flexbile in-app update state change listener.
 | **`UPDATE_NOT_AVAILABLE`** | <code>1</code> |
 | **`UPDATE_AVAILABLE`**     | <code>2</code> |
 | **`UPDATE_IN_PROGRESS`**   | <code>3</code> |
-
 
 #### AppUpdateResultCode
 
@@ -255,7 +242,6 @@ Adds a flexbile in-app update state change listener.
 | **`NOT_AVAILABLE`** | <code>3</code> | No update available.                                                                        |
 | **`NOT_ALLOWED`**   | <code>4</code> | Update type not allowed.                                                                    |
 | **`INFO_MISSING`**  | <code>5</code> | App update info missing. You must call `getAppUpdateInfo()` before requesting an update.    |
-
 
 #### FlexibleUpdateInstallStatus
 
