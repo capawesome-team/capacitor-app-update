@@ -116,7 +116,7 @@ public class AppUpdate extends Plugin {
 
     @PluginMethod
     public void startFlexibleUpdate(PluginCall call) {
-        boolean ready = this.readyForUpdate(call, AppUpdateType.IMMEDIATE);
+        boolean ready = this.readyForUpdate(call, AppUpdateType.FLEXIBLE);
         if (!ready) {
             return;
         }
@@ -186,7 +186,7 @@ public class AppUpdate extends Plugin {
             call.resolve(ret);
             return false;
         }
-        if (this.appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+        if (this.appUpdateInfo.updateAvailability() != UpdateAvailability.UPDATE_AVAILABLE) {
             ret.put("code", this.UPDATE_NOT_AVAILABLE);
             call.resolve(ret);
             return false;
