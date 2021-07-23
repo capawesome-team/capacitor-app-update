@@ -45,6 +45,10 @@ This plugin will use the following project variables (defined in your app’s `v
 
 No configuration required for this plugin.
 
+## Demo
+
+A working example can be found here: [robingenz/capacitor-plugin-demo](https://github.com/robingenz/capacitor-plugin-demo)
+
 ## Usage
 
 ```typescript
