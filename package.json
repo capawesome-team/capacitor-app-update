@@ -1,6 +1,6 @@
 {
   "name": "@robingenz/capacitor-app-update",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "Capacitor plugin that assists with app updates.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",

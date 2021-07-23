@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.3](https://github.com/robingenz/capacitor-app-update/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2021-07-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* Update to Capacitor 3
+
+### Features
+
+* add Capacitor 3 support ([#13](https://github.com/robingenz/capacitor-app-update/issues/13)) ([b9f0ae5](https://github.com/robingenz/capacitor-app-update/commit/b9f0ae5281ff87f880e903da806d64a02658a4c5))
+
 ## [1.0.0-alpha.2](https://github.com/robingenz/capacitor-app-update/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2021-05-07)
 
 
