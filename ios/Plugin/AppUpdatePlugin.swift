@@ -5,8 +5,8 @@ import Capacitor
  * Please read the Capacitor iOS Plugin Development Guide
  * here: https://capacitorjs.com/docs/plugins/ios
  */
-@objc(AppUpdate)
-public class AppUpdate: CAPPlugin {
+@objc(AppUpdatePlugin)
+public class AppUpdatePlugin: CAPPlugin {
     private static let updateAvailabilityNotAvailable = 1
     private static let updateAvailabilityAvailable = 2
 
@@ -32,10 +32,10 @@ public class AppUpdate: CAPPlugin {
                     call.reject("Required app information could not be fetched")
                     return
                 }
-                var updateAvailability = AppUpdate.updateAvailabilityNotAvailable
+                var updateAvailability = AppUpdatePlugin.updateAvailabilityNotAvailable
                 let updateAvailable = self.compareVersions(currentVersion, availableVersion) == .orderedDescending
                 if updateAvailable {
-                    updateAvailability = AppUpdate.updateAvailabilityAvailable
+                    updateAvailability = AppUpdatePlugin.updateAvailabilityAvailable
                 }
                 call.resolve([
                     "currentVersion": currentVersion,

@@ -10,7 +10,6 @@ import android.content.IntentSender;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import androidx.appcompat.app.AppCompatActivity;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
@@ -25,12 +24,10 @@ import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
 
-@NativePlugin(requestCodes = { AppUpdate.REQUEST_IMMEDIATE_UPDATE, AppUpdate.REQUEST_FLEXIBLE_UPDATE })
-public class AppUpdate extends Plugin {
-    /** Request code for immediate update */
-    protected static final int REQUEST_IMMEDIATE_UPDATE = 10;
-    /** Request code for flexible update */
-    protected static final int REQUEST_FLEXIBLE_UPDATE = 11;
+@NativePlugin(name = "AppUpdate", requestCodes = { AppUpdatePlugin.REQUEST_IMMEDIATE_UPDATE, AppUpdatePlugin.REQUEST_FLEXIBLE_UPDATE })
+public class AppUpdatePlugin extends Plugin {
+
+    public static final String ERROR_GET_APP_INFO_FAILED = "Unable to get app info.";
     /** Update result: update ok. */
     public static final int UPDATE_OK = 0;
     /** Update result: update canceled. */
@@ -43,9 +40,14 @@ public class AppUpdate extends Plugin {
     public static final int UPDATE_NOT_ALLOWED = 4;
     /** Update result: update info missing. */
     public static final int UPDATE_INFO_MISSING = 5;
+    /** Request code for immediate update */
+    protected static final int REQUEST_IMMEDIATE_UPDATE = 10;
+    /** Request code for flexible update */
+    protected static final int REQUEST_FLEXIBLE_UPDATE = 11;
     private AppUpdateManager appUpdateManager;
     private AppUpdateInfo appUpdateInfo;
     private InstallStateUpdatedListener listener;
+    private PluginCall savedPluginCall;
 
     public void load() {
         this.appUpdateManager = AppUpdateManagerFactory.create(this.getContext());
@@ -57,11 +59,11 @@ public class AppUpdate extends Plugin {
         appUpdateInfoTask.addOnSuccessListener(
             appUpdateInfo -> {
                 this.appUpdateInfo = appUpdateInfo;
-                PackageInfo pInfo = null;
+                PackageInfo pInfo;
                 try {
                     pInfo = this.getPackageInfo();
                 } catch (PackageManager.NameNotFoundException e) {
-                    call.reject("Unable to get App Info");
+                    call.reject(ERROR_GET_APP_INFO_FAILED);
                     return;
                 }
                 JSObject ret = new JSObject();
@@ -101,13 +103,13 @@ public class AppUpdate extends Plugin {
         if (!ready) {
             return;
         }
-        saveCall(call);
+        savedPluginCall = call;
         try {
             this.appUpdateManager.startUpdateFlowForResult(
                     this.appUpdateInfo,
                     AppUpdateType.IMMEDIATE,
                     getActivity(),
-                    AppUpdate.REQUEST_IMMEDIATE_UPDATE
+                    AppUpdatePlugin.REQUEST_IMMEDIATE_UPDATE
                 );
         } catch (IntentSender.SendIntentException e) {
             call.reject(e.getMessage());
@@ -120,7 +122,7 @@ public class AppUpdate extends Plugin {
         if (!ready) {
             return;
         }
-        saveCall(call);
+        savedPluginCall = call;
         try {
             this.listener =
                 state -> {
@@ -138,7 +140,7 @@ public class AppUpdate extends Plugin {
                     this.appUpdateInfo,
                     AppUpdateType.FLEXIBLE,
                     getActivity(),
-                    AppUpdate.REQUEST_FLEXIBLE_UPDATE
+                    AppUpdatePlugin.REQUEST_FLEXIBLE_UPDATE
                 );
         } catch (IntentSender.SendIntentException e) {
             call.reject(e.getMessage());
@@ -154,19 +156,18 @@ public class AppUpdate extends Plugin {
     @Override
     protected void handleOnActivityResult(int requestCode, int resultCode, Intent data) {
         super.handleOnActivityResult(requestCode, resultCode, data);
-        PluginCall savedCall = getSavedCall();
-        if (savedCall == null) {
+        if (savedPluginCall == null) {
             return;
         }
         JSObject ret = new JSObject();
         if (resultCode == RESULT_OK) {
-            ret.put("code", this.UPDATE_OK);
+            ret.put("code", UPDATE_OK);
         } else if (resultCode == RESULT_CANCELED) {
-            ret.put("code", this.UPDATE_CANCELED);
+            ret.put("code", UPDATE_CANCELED);
         } else if (resultCode == RESULT_IN_APP_UPDATE_FAILED) {
-            ret.put("code", this.UPDATE_FAILED);
+            ret.put("code", UPDATE_FAILED);
         }
-        savedCall.resolve(ret);
+        savedPluginCall.resolve(ret);
         if (requestCode == REQUEST_FLEXIBLE_UPDATE) {
             this.appUpdateManager.unregisterListener(this.listener);
             this.listener = null;
@@ -182,17 +183,17 @@ public class AppUpdate extends Plugin {
     private boolean readyForUpdate(PluginCall call, int appUpdateType) {
         JSObject ret = new JSObject();
         if (this.appUpdateInfo == null) {
-            ret.put("code", this.UPDATE_INFO_MISSING);
+            ret.put("code", UPDATE_INFO_MISSING);
             call.resolve(ret);
             return false;
         }
         if (this.appUpdateInfo.updateAvailability() != UpdateAvailability.UPDATE_AVAILABLE) {
-            ret.put("code", this.UPDATE_NOT_AVAILABLE);
+            ret.put("code", UPDATE_NOT_AVAILABLE);
             call.resolve(ret);
             return false;
         }
-        if (appUpdateInfo.isUpdateTypeAllowed(appUpdateType) == false) {
-            ret.put("code", this.UPDATE_NOT_ALLOWED);
+        if (!appUpdateInfo.isUpdateTypeAllowed(appUpdateType)) {
+            ret.put("code", UPDATE_NOT_ALLOWED);
             call.resolve(ret);
             return false;
         }
