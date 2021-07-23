@@ -51,13 +51,13 @@ No configuration required for this plugin.
 import { AppUpdate } from '@robingenz/capacitor-app-update';
 
 const getCurrentAppVersion = async () => {
-  const info = await AppUpdate.getAppUpdateInfo();
-  return info.currentVersion;
+  const result = await AppUpdate.getAppUpdateInfo();
+  return result.currentVersion;
 };
 
 const getAvailableAppVersion = async () => {
-  const info = await AppUpdate.getAppUpdateInfo();
-  return info.availableVersion;
+  const result = await AppUpdate.getAppUpdateInfo();
+  return result.availableVersion;
 };
 
 const openAppStore = async () => {
@@ -65,25 +65,23 @@ const openAppStore = async () => {
 };
 
 const performImmediateUpdate = async () => {
-  const info = await AppUpdate.getAppUpdateInfo();
-  if (info.updateAvailability !== AppUpdateAvailability.UPDATE_AVAILABLE) {
+  const result = await AppUpdate.getAppUpdateInfo();
+  if (result.updateAvailability !== AppUpdateAvailability.UPDATE_AVAILABLE) {
     return;
   }
-  if (!info.immediateUpdateAllowed) {
-    return;
+  if (result.immediateUpdateAllowed) {
+    await AppUpdate.performImmediateUpdate();
   }
-  await AppUpdate.performImmediateUpdate();
 };
 
 const startFlexibleUpdate = async () => {
-  const info = await AppUpdate.getAppUpdateInfo();
-  if (info.updateAvailability !== AppUpdateAvailability.UPDATE_AVAILABLE) {
+  const result = await AppUpdate.getAppUpdateInfo();
+  if (result.updateAvailability !== AppUpdateAvailability.UPDATE_AVAILABLE) {
     return;
   }
-  if (!info.flexibleUpdateAllowed) {
-    return;
+  if (result.flexibleUpdateAllowed) {
+    await AppUpdate.startFlexibleUpdate();
   }
-  await AppUpdate.startFlexibleUpdate();
 };
 
 const completeFlexibleUpdate = async () => {
