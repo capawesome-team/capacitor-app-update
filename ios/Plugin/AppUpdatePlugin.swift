@@ -32,10 +32,10 @@ public class AppUpdatePlugin: CAPPlugin {
                     call.reject("Required app information could not be fetched")
                     return
                 }
-                var updateAvailability = AppUpdate.updateAvailabilityNotAvailable
+                var updateAvailability = AppUpdatePlugin.updateAvailabilityNotAvailable
                 let updateAvailable = self.compareVersions(currentVersion, availableVersion) == .orderedDescending
                 if updateAvailable {
-                    updateAvailability = AppUpdate.updateAvailabilityAvailable
+                    updateAvailability = AppUpdatePlugin.updateAvailabilityAvailable
                 }
                 call.resolve([
                     "currentVersion": currentVersion,
