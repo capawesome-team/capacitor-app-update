@@ -47,6 +47,7 @@ public class AppUpdatePlugin extends Plugin {
     private AppUpdateManager appUpdateManager;
     private AppUpdateInfo appUpdateInfo;
     private InstallStateUpdatedListener listener;
+    private PluginCall savedPluginCall;
 
     public void load() {
         this.appUpdateManager = AppUpdateManagerFactory.create(this.getContext());
@@ -58,7 +59,7 @@ public class AppUpdatePlugin extends Plugin {
         appUpdateInfoTask.addOnSuccessListener(
             appUpdateInfo -> {
                 this.appUpdateInfo = appUpdateInfo;
-                PackageInfo pInfo = null;
+                PackageInfo pInfo;
                 try {
                     pInfo = this.getPackageInfo();
                 } catch (PackageManager.NameNotFoundException e) {
@@ -102,7 +103,7 @@ public class AppUpdatePlugin extends Plugin {
         if (!ready) {
             return;
         }
-        saveCall(call);
+        savedPluginCall = call;
         try {
             this.appUpdateManager.startUpdateFlowForResult(
                     this.appUpdateInfo,
@@ -121,7 +122,7 @@ public class AppUpdatePlugin extends Plugin {
         if (!ready) {
             return;
         }
-        saveCall(call);
+        savedPluginCall = call;
         try {
             this.listener =
                 state -> {
@@ -155,19 +156,18 @@ public class AppUpdatePlugin extends Plugin {
     @Override
     protected void handleOnActivityResult(int requestCode, int resultCode, Intent data) {
         super.handleOnActivityResult(requestCode, resultCode, data);
-        PluginCall savedCall = getSavedCall();
-        if (savedCall == null) {
+        if (savedPluginCall == null) {
             return;
         }
         JSObject ret = new JSObject();
         if (resultCode == RESULT_OK) {
-            ret.put("code", this.UPDATE_OK);
+            ret.put("code", UPDATE_OK);
         } else if (resultCode == RESULT_CANCELED) {
-            ret.put("code", this.UPDATE_CANCELED);
+            ret.put("code", UPDATE_CANCELED);
         } else if (resultCode == RESULT_IN_APP_UPDATE_FAILED) {
-            ret.put("code", this.UPDATE_FAILED);
+            ret.put("code", UPDATE_FAILED);
         }
-        savedCall.resolve(ret);
+        savedPluginCall.resolve(ret);
         if (requestCode == REQUEST_FLEXIBLE_UPDATE) {
             this.appUpdateManager.unregisterListener(this.listener);
             this.listener = null;
@@ -183,17 +183,17 @@ public class AppUpdatePlugin extends Plugin {
     private boolean readyForUpdate(PluginCall call, int appUpdateType) {
         JSObject ret = new JSObject();
         if (this.appUpdateInfo == null) {
-            ret.put("code", this.UPDATE_INFO_MISSING);
+            ret.put("code", UPDATE_INFO_MISSING);
             call.resolve(ret);
             return false;
         }
         if (this.appUpdateInfo.updateAvailability() != UpdateAvailability.UPDATE_AVAILABLE) {
-            ret.put("code", this.UPDATE_NOT_AVAILABLE);
+            ret.put("code", UPDATE_NOT_AVAILABLE);
             call.resolve(ret);
             return false;
         }
-        if (appUpdateInfo.isUpdateTypeAllowed(appUpdateType) == false) {
-            ret.put("code", this.UPDATE_NOT_ALLOWED);
+        if (!appUpdateInfo.isUpdateTypeAllowed(appUpdateType)) {
+            ret.put("code", UPDATE_NOT_ALLOWED);
             call.resolve(ret);
             return false;
         }
