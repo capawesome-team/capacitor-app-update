@@ -1,6 +1,10 @@
 import { WebPlugin } from '@capacitor/core';
 
-import type { AppUpdateInfo, AppUpdatePlugin, AppUpdateResult } from './definitions';
+import type {
+  AppUpdateInfo,
+  AppUpdatePlugin,
+  AppUpdateResult,
+} from './definitions';
 
 export class AppUpdateWeb extends WebPlugin implements AppUpdatePlugin {
   async getAppUpdateInfo(): Promise<AppUpdateInfo> {
