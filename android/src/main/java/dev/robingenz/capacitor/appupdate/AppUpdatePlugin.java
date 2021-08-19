@@ -149,6 +149,10 @@ public class AppUpdatePlugin extends Plugin {
 
     @PluginMethod
     public void completeFlexibleUpdate(PluginCall call) {
+        if (this.listener != null) {
+            this.appUpdateManager.unregisterListener(this.listener);
+            this.listener = null;
+        }
         this.appUpdateManager.completeUpdate();
         call.resolve();
     }
@@ -168,10 +172,6 @@ public class AppUpdatePlugin extends Plugin {
             ret.put("code", UPDATE_FAILED);
         }
         savedPluginCall.resolve(ret);
-        if (requestCode == REQUEST_FLEXIBLE_UPDATE) {
-            this.appUpdateManager.unregisterListener(this.listener);
-            this.listener = null;
-        }
         this.appUpdateInfo = null;
     }
 
