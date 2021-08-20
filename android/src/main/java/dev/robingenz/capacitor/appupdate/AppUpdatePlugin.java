@@ -171,8 +171,12 @@ public class AppUpdatePlugin extends Plugin {
         } else if (resultCode == RESULT_IN_APP_UPDATE_FAILED) {
             ret.put("code", UPDATE_FAILED);
         }
-        savedPluginCall.resolve(ret);
+        if (resultCode != RESULT_OK && requestCode == REQUEST_FLEXIBLE_UPDATE) {
+            this.appUpdateManager.unregisterListener(this.listener);
+            this.listener = null;
+        }
         this.appUpdateInfo = null;
+        savedPluginCall.resolve(ret);
     }
 
     private PackageInfo getPackageInfo() throws PackageManager.NameNotFoundException {
