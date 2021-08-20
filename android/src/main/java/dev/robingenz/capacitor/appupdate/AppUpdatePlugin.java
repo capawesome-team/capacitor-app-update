@@ -160,6 +160,11 @@ public class AppUpdatePlugin extends Plugin {
     @Override
     protected void handleOnActivityResult(int requestCode, int resultCode, Intent data) {
         super.handleOnActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK && requestCode == REQUEST_FLEXIBLE_UPDATE) {
+            this.appUpdateManager.unregisterListener(this.listener);
+            this.listener = null;
+        }
+        this.appUpdateInfo = null;
         if (savedPluginCall == null) {
             return;
         }
@@ -171,11 +176,6 @@ public class AppUpdatePlugin extends Plugin {
         } else if (resultCode == RESULT_IN_APP_UPDATE_FAILED) {
             ret.put("code", UPDATE_FAILED);
         }
-        if (resultCode != RESULT_OK && requestCode == REQUEST_FLEXIBLE_UPDATE) {
-            this.appUpdateManager.unregisterListener(this.listener);
-            this.listener = null;
-        }
-        this.appUpdateInfo = null;
         savedPluginCall.resolve(ret);
     }
 
