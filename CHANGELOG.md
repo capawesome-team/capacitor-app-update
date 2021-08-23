@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/robingenz/capacitor-app-update/compare/v1.0.0-alpha.3...v1.0.0) (2021-08-23)
+
+
+### Bug Fixes
+
+* **android:** unregister listener on update complete ([#21](https://github.com/robingenz/capacitor-app-update/issues/21)) ([659103a](https://github.com/robingenz/capacitor-app-update/commit/659103af743b338a0c1f82a04431952152620d95))
+
 ## [1.0.0-alpha.3](https://github.com/robingenz/capacitor-app-update/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2021-07-23)
 
 
