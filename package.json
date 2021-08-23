@@ -1,6 +1,6 @@
 {
   "name": "@robingenz/capacitor-app-update",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-dev.e353964.1629473800",
   "description": "App update",
   "main": "dist/plugin.js",
   "module": "dist/esm/index.js",

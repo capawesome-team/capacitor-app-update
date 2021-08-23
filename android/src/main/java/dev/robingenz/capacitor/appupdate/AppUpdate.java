@@ -147,6 +147,10 @@ public class AppUpdate extends Plugin {
 
     @PluginMethod
     public void completeFlexibleUpdate(PluginCall call) {
+        if (this.listener != null) {
+            this.appUpdateManager.unregisterListener(this.listener);
+            this.listener = null;
+        }
         this.appUpdateManager.completeUpdate();
         call.resolve();
     }
@@ -154,6 +158,11 @@ public class AppUpdate extends Plugin {
     @Override
     protected void handleOnActivityResult(int requestCode, int resultCode, Intent data) {
         super.handleOnActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK && requestCode == REQUEST_FLEXIBLE_UPDATE) {
+            this.appUpdateManager.unregisterListener(this.listener);
+            this.listener = null;
+        }
+        this.appUpdateInfo = null;
         PluginCall savedCall = getSavedCall();
         if (savedCall == null) {
             return;
@@ -167,11 +176,6 @@ public class AppUpdate extends Plugin {
             ret.put("code", this.UPDATE_FAILED);
         }
         savedCall.resolve(ret);
-        if (requestCode == REQUEST_FLEXIBLE_UPDATE) {
-            this.appUpdateManager.unregisterListener(this.listener);
-            this.listener = null;
-        }
-        this.appUpdateInfo = null;
     }
 
     private PackageInfo getPackageInfo() throws PackageManager.NameNotFoundException {
