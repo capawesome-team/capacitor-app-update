@@ -95,8 +95,8 @@ const completeFlexibleUpdate = async () => {
 
 <docgen-index>
 
-* [`getAppUpdateInfo()`](#getappupdateinfo)
-* [`openAppStore()`](#openappstore)
+* [`getAppUpdateInfo(...)`](#getappupdateinfo)
+* [`openAppStore(...)`](#openappstore)
 * [`performImmediateUpdate()`](#performimmediateupdate)
 * [`startFlexibleUpdate()`](#startflexibleupdate)
 * [`completeFlexibleUpdate()`](#completeflexibleupdate)
@@ -109,30 +109,38 @@ const completeFlexibleUpdate = async () => {
 <docgen-api>
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
 
-### getAppUpdateInfo()
+### getAppUpdateInfo(...)
 
 ```typescript
-getAppUpdateInfo() => Promise<AppUpdateInfo>
+getAppUpdateInfo(options?: GetAppUpdateInfoOptions | undefined) => Promise<AppUpdateInfo>
 ```
 
 Returns app update informations.
 
 Only available for Android and iOS.
 
+| Param         | Type                                                                        |
+| ------------- | --------------------------------------------------------------------------- |
+| **`options`** | <code><a href="#getappupdateinfooptions">GetAppUpdateInfoOptions</a></code> |
+
 **Returns:** <code>Promise&lt;<a href="#appupdateinfo">AppUpdateInfo</a>&gt;</code>
 
 --------------------
 
 
-### openAppStore()
+### openAppStore(...)
 
 ```typescript
-openAppStore() => Promise<void>
+openAppStore(options?: OpenAppStoreOptions | undefined) => Promise<void>
 ```
 
 Opens the app store entry of the app in the Play Store (Android) or App Store (iOS).
 
 Only available for Android and iOS.
+
+| Param         | Type                                                                |
+| ------------- | ------------------------------------------------------------------- |
+| **`options`** | <code><a href="#openappstoreoptions">OpenAppStoreOptions</a></code> |
 
 --------------------
 
@@ -212,6 +220,20 @@ Adds a flexbile in-app update state change listener.
 | **`updatePriority`**              | <code>number</code>                                                     | In-app update priority for this update, as defined by the developer in the Google Play Developer API. Only available for Android.      |
 | **`immediateUpdateAllowed`**      | <code>boolean</code>                                                    | `true` if an immediate update is allowed, otherwise `false`. Only available for Android.                                               |
 | **`flexibleUpdateAllowed`**       | <code>boolean</code>                                                    | `true` if a flexible update is allowed, otherwise `false`. Only available for Android.                                                 |
+
+
+#### GetAppUpdateInfoOptions
+
+| Prop          | Type                | Description                                                                                                                                                                |
+| ------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`country`** | <code>string</code> | The two-letter country code for the store you want to search. See http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 for a list of ISO Country Codes. Only available for iOS. |
+
+
+#### OpenAppStoreOptions
+
+| Prop          | Type                | Description                                                                                                                                                                |
+| ------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`country`** | <code>string</code> | The two-letter country code for the store you want to search. See http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 for a list of ISO Country Codes. Only available for iOS. |
 
 
 #### AppUpdateResult

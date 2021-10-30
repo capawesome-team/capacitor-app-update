@@ -6,13 +6,13 @@ export interface AppUpdatePlugin {
    *
    * Only available for Android and iOS.
    */
-  getAppUpdateInfo(): Promise<AppUpdateInfo>;
+  getAppUpdateInfo(options?: GetAppUpdateInfoOptions): Promise<AppUpdateInfo>;
   /**
    * Opens the app store entry of the app in the Play Store (Android) or App Store (iOS).
    *
    * Only available for Android and iOS.
    */
-  openAppStore(): Promise<void>;
+  openAppStore(options?: OpenAppStoreOptions): Promise<void>;
   /**
    * Performs an immediate in-app update.
    *
@@ -38,6 +38,16 @@ export interface AppUpdatePlugin {
     eventName: 'onFlexibleUpdateStateChange',
     listenerFunc: (state: FlexibleUpdateState) => void,
   ): PluginListenerHandle;
+}
+
+export interface GetAppUpdateInfoOptions {
+  /**
+   *  The two-letter country code for the store you want to search.
+   *  See http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 for a list of ISO Country Codes.
+   *
+   *  Only available for iOS.
+   */
+  country?: string;
 }
 
 export interface AppUpdateInfo {
@@ -90,6 +100,16 @@ export enum AppUpdateAvailability {
   UPDATE_NOT_AVAILABLE = 1,
   UPDATE_AVAILABLE = 2,
   UPDATE_IN_PROGRESS = 3,
+}
+
+export interface OpenAppStoreOptions {
+  /**
+   *  The two-letter country code for the store you want to search.
+   *  See http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 for a list of ISO Country Codes.
+   *
+   *  Only available for iOS.
+   */
+  country?: string;
 }
 
 export interface FlexibleUpdateState {

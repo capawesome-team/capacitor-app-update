@@ -17,10 +17,13 @@ public class AppUpdatePlugin: CAPPlugin {
                     let info = Bundle.main.infoDictionary,
                     let bundleId = info["CFBundleIdentifier"] as? String,
                     let currentVersion = info["CFBundleShortVersionString"] as? String,
-                    let lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)")
+                    var lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)")
                 else {
                     call.reject("Invalid bundle info provided")
                     return
+                }
+                if let country = call.getString("country") {
+                    lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)&country=\(country)")!
                 }
                 let data = try Data(contentsOf: lookupUrl)
                 guard
@@ -55,10 +58,13 @@ public class AppUpdatePlugin: CAPPlugin {
                 guard
                     let info = Bundle.main.infoDictionary,
                     let bundleId = info["CFBundleIdentifier"] as? String,
-                    let lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)")
+                    var lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)")
                 else {
                     call.reject("Invalid bundle info provided")
                     return
+                }
+                if let country = call.getString("country") {
+                    lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)&country=\(country)")!
                 }
                 let data = try Data(contentsOf: lookupUrl)
                 guard
