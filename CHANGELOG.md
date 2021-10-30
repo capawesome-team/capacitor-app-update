@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/robingenz/capacitor-app-update/compare/v1.0.0...v1.1.0) (2021-10-30)
+
+
+### Features
+
+* **ios:** add `country` property ([#26](https://github.com/robingenz/capacitor-app-update/issues/26)) ([101c7dc](https://github.com/robingenz/capacitor-app-update/commit/101c7dcbdc7a171a39df3aad9ec9b270b2ef954f))
+
 ## [1.0.0](https://github.com/robingenz/capacitor-app-update/compare/v1.0.0-alpha.3...v1.0.0) (2021-08-23)
 
 
