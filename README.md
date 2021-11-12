@@ -305,8 +305,8 @@ The Android Developers documentation describes how to test [in-app updates](http
 
 ## Changelog
 
-See [CHANGELOG.md](https://github.com/robingenz/capacitor-app-update/blob/master/CHANGELOG.md).
+See [CHANGELOG.md](https://github.com/robingenz/capacitor-app-update/blob/main/CHANGELOG.md).
 
 ## License
 
-See [LICENSE](https://github.com/robingenz/capacitor-app-update/blob/master/LICENSE).
+See [LICENSE](https://github.com/robingenz/capacitor-app-update/blob/main/LICENSE).
