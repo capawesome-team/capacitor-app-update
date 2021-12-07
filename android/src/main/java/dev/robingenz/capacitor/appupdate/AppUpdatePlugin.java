@@ -73,6 +73,10 @@ public class AppUpdatePlugin extends Plugin {
                 ret.put("updatePriority", appUpdateInfo.updatePriority());
                 ret.put("immediateUpdateAllowed", appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE));
                 ret.put("flexibleUpdateAllowed", appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE));
+                Integer clientVersionStalenessDays = appUpdateInfo.clientVersionStalenessDays();
+                if (clientVersionStalenessDays != null) {
+                    ret.put("clientVersionStalenessDays", clientVersionStalenessDays);
+                }
                 call.resolve(ret);
             }
         );
