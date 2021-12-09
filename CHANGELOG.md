@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/robingenz/capacitor-app-update/compare/v1.1.0...v1.2.0) (2021-12-09)
+
+
+### Features
+
+* **android:** expose `clientVersionStalenessDays` ([#29](https://github.com/robingenz/capacitor-app-update/issues/29)) ([0ae0dd6](https://github.com/robingenz/capacitor-app-update/commit/0ae0dd617241d5c563957c6f7992e4f9a57a933c))
+* **android:** expose `installStatus` ([#30](https://github.com/robingenz/capacitor-app-update/issues/30)) ([20701e8](https://github.com/robingenz/capacitor-app-update/commit/20701e81e6a4c1749aee2ade8ad7cda11ae18878))
+
 ## [1.1.0](https://github.com/robingenz/capacitor-app-update/compare/v1.0.0...v1.1.0) (2021-10-30)
 
 
