@@ -93,6 +93,12 @@ export interface AppUpdateInfo {
    * Only available for Android.
    */
   flexibleUpdateAllowed?: boolean;
+  /**
+   * Number of days since the Google Play Store app on the user's device has learnt about an available update if an update is available or in progress.
+   *
+   * Only available for Android.
+   */
+  clientVersionStalenessDays?: number;
 }
 
 export enum AppUpdateAvailability {
