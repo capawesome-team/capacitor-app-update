@@ -77,6 +77,7 @@ public class AppUpdatePlugin extends Plugin {
                 if (clientVersionStalenessDays != null) {
                     ret.put("clientVersionStalenessDays", clientVersionStalenessDays);
                 }
+                ret.put("installStatus", appUpdateInfo.installStatus());
                 call.resolve(ret);
             }
         );
