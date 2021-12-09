@@ -33,6 +33,8 @@ export interface AppUpdatePlugin {
   completeFlexibleUpdate(): Promise<void>;
   /**
    * Adds a flexbile in-app update state change listener.
+   *
+   * Only available for Android.
    */
   addListener(
     eventName: 'onFlexibleUpdateStateChange',
@@ -99,6 +101,12 @@ export interface AppUpdateInfo {
    * Only available for Android.
    */
   clientVersionStalenessDays?: number;
+  /**
+   * Flexible in-app update install status.
+   *
+   * Only available for Android.
+   */
+  installStatus?: FlexibleUpdateInstallStatus;
 }
 
 export enum AppUpdateAvailability {
