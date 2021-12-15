@@ -30,7 +30,8 @@ public class AppUpdatePlugin: CAPPlugin {
                     let json = try JSONSerialization.jsonObject(with: data, options: [.allowFragments]) as? [String: Any],
                     let result = (json["results"] as? [Any])?.first as? [String: Any],
                     let availableVersion = result["version"] as? String,
-                    let availableVersionReleaseDate = result["currentVersionReleaseDate"] as? String
+                    let availableVersionReleaseDate = result["currentVersionReleaseDate"] as? String,
+                    let minimumOsVersion = result["minimumOsVersion"] as? String
                 else {
                     call.reject("Required app information could not be fetched")
                     return
@@ -44,7 +45,8 @@ public class AppUpdatePlugin: CAPPlugin {
                     "currentVersion": currentVersion,
                     "availableVersion": availableVersion,
                     "availableVersionReleaseDate": availableVersionReleaseDate,
-                    "updateAvailability": updateAvailability
+                    "updateAvailability": updateAvailability,
+                    "minimumOsVersion": minimumOsVersion
                 ])
             } catch let error {
                 call.reject(error.localizedDescription)

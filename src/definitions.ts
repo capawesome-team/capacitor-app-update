@@ -107,6 +107,12 @@ export interface AppUpdateInfo {
    * Only available for Android.
    */
   installStatus?: FlexibleUpdateInstallStatus;
+  /**
+   * The minimum version of the operating system required for the app to run in iOS.
+   *
+   * Only available for iOS.
+   */
+  minimumOsVersion?: string;
 }
 
 export enum AppUpdateAvailability {
