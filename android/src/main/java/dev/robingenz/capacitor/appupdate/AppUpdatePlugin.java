@@ -154,10 +154,7 @@ public class AppUpdatePlugin extends Plugin {
 
     @PluginMethod
     public void completeFlexibleUpdate(PluginCall call) {
-        if (this.listener != null) {
-            this.appUpdateManager.unregisterListener(this.listener);
-            this.listener = null;
-        }
+        this.unregisterListener();
         this.appUpdateManager.completeUpdate();
         call.resolve();
     }
@@ -166,8 +163,7 @@ public class AppUpdatePlugin extends Plugin {
     protected void handleOnActivityResult(int requestCode, int resultCode, Intent data) {
         super.handleOnActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_OK && requestCode == REQUEST_FLEXIBLE_UPDATE) {
-            this.appUpdateManager.unregisterListener(this.listener);
-            this.listener = null;
+            this.unregisterListener();
         }
         this.appUpdateInfo = null;
         if (savedPluginCall == null) {
@@ -207,5 +203,13 @@ public class AppUpdatePlugin extends Plugin {
             return false;
         }
         return true;
+    }
+
+    private void unregisterListener() {
+        if (this.listener == null || this.appUpdateManager == null) {
+            return;
+        }
+        this.appUpdateManager.unregisterListener(this.listener);
+        this.listener = null;
     }
 }
