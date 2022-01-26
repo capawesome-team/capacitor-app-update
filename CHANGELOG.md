@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/robingenz/capacitor-app-update/compare/v1.3.0...v1.3.1) (2022-01-26)
+
+
+### Bug Fixes
+
+* **android:** `NullPointerException` ([#36](https://github.com/robingenz/capacitor-app-update/issues/36)) ([dfa918e](https://github.com/robingenz/capacitor-app-update/commit/dfa918e1e2826f970907138f804fefc077ec417c))
+* inline source code in esm map files ([895fe1c](https://github.com/robingenz/capacitor-app-update/commit/895fe1cdb215f183d82f23d9b1376ed4cf9fc86f))
+
 ## [1.3.0](https://github.com/robingenz/capacitor-app-update/compare/v1.2.0...v1.3.0) (2021-12-15)
 
 
