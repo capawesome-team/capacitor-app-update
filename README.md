@@ -1,20 +1,18 @@
-<p align="center"><br><img src="https://user-images.githubusercontent.com/236501/85893648-1c92e880-b7a8-11ea-926d-95355b8175c7.png" width="128" height="128" /></p>
+<p align="center"><br><img src="https://avatars.githubusercontent.com/u/105555861" width="128" height="128" /></p>
 <h3 align="center">App Update</h3>
-<p align="center"><strong><code>@robingenz/capacitor-app-update</code></strong></p>
+<p align="center"><strong><code>@capawesome/capacitor-app-update</code></strong></p>
 <p align="center">
   Capacitor plugin that assists with app updates.
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/maintenance/yes/2022?style=flat-square" />
-  <a href="https://github.com/robingenz/capacitor-app-update/actions?query=workflow%3A%22CI%22"><img src="https://img.shields.io/github/workflow/status/robingenz/capacitor-app-update/CI/main?style=flat-square" /></a>
-  <a href="https://www.npmjs.com/package/@robingenz/capacitor-app-update"><img src="https://img.shields.io/npm/l/@robingenz/capacitor-app-update?style=flat-square" /></a>
+  <a href="https://github.com/capawesome-team/capacitor-app-update/actions?query=workflow%3A%22CI%22"><img src="https://img.shields.io/github/workflow/status/capawesome-team/capacitor-app-update/CI/main?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@capawesome/capacitor-app-update"><img src="https://img.shields.io/npm/l/@capawesome/capacitor-app-update?style=flat-square" /></a>
 <br>
-  <a href="https://www.npmjs.com/package/@robingenz/capacitor-app-update"><img src="https://img.shields.io/npm/dw/@robingenz/capacitor-app-update?style=flat-square" /></a>
-  <a href="https://www.npmjs.com/package/@robingenz/capacitor-app-update"><img src="https://img.shields.io/npm/v/@robingenz/capacitor-app-update?style=flat-square" /></a>
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-1-orange?style=flat-square" /></a>
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+  <a href="https://www.npmjs.com/package/@capawesome/capacitor-app-update"><img src="https://img.shields.io/npm/dw/@capawesome/capacitor-app-update?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@capawesome/capacitor-app-update"><img src="https://img.shields.io/npm/v/@capawesome/capacitor-app-update?style=flat-square" /></a>
+  <a href="https://github.com/capawesome-team"><img src="https://img.shields.io/badge/part%20of-capawesome-%234f46e5?style=flat-square" /></a>
 </p>
 
 This plugin supports retrieving app update information on **Android** and **iOS**.  
@@ -26,10 +24,18 @@ Additionally, this plugin supports [in-app updates](https://developer.android.co
 | ---------- | ----------------------------------------- | --------------------------------------------- |
 | Robin Genz | [robingenz](https://github.com/robingenz) | [@robin_genz](https://twitter.com/robin_genz) |
 
+## Sponsors
+
+This is an MIT-licensed open source project. 
+It can grow thanks to the support by these awesome people. 
+If you'd like to join them, please read more [here](https://github.com/sponsors/capawesome-team).  
+
+<!-- sponsors --><!-- sponsors -->
+
 ## Installation
 
 ```bash
-npm install @robingenz/capacitor-app-update
+npm install @capawesome/capacitor-app-update
 npx cap sync
 ```
 
@@ -50,7 +56,7 @@ A working example can be found here: [robingenz/capacitor-plugin-demo](https://g
 ## Usage
 
 ```typescript
-import { AppUpdate } from '@robingenz/capacitor-app-update';
+import { AppUpdate } from '@capawesome/capacitor-app-update';
 
 const getCurrentAppVersion = async () => {
   const result = await AppUpdate.getAppUpdateInfo();
@@ -310,8 +316,8 @@ The Android Developers documentation describes how to test [in-app updates](http
 
 ## Changelog
 
-See [CHANGELOG.md](https://github.com/robingenz/capacitor-app-update/blob/main/CHANGELOG.md).
+See [CHANGELOG.md](https://github.com/capawesome-team/capacitor-app-update/blob/main/CHANGELOG.md).
 
 ## License
 
-See [LICENSE](https://github.com/robingenz/capacitor-app-update/blob/main/LICENSE).
+See [LICENSE](https://github.com/capawesome-team/capacitor-app-update/blob/main/LICENSE).

@@ -1,5 +1,5 @@
 {
-  "name": "@robingenz/capacitor-app-update",
+  "name": "@capawesome/capacitor-app-update",
   "version": "1.3.1",
   "description": "Capacitor plugin that assists with app updates.",
   "main": "dist/plugin.cjs.js",
@@ -11,17 +11,27 @@
     "android/build.gradle",
     "dist/",
     "ios/Plugin/",
-    "RobingenzCapacitorAppUpdate.podspec"
+    "CapawesomeCapacitorAppUpdate.podspec"
   ],
   "author": "Robin Genz <mail@robingenz.dev>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/robingenz/capacitor-app-update.git"
+    "url": "git+https://github.com/capawesome-team/capacitor-app-update.git"
   },
   "bugs": {
-    "url": "https://github.com/robingenz/capacitor-app-update/issues"
+    "url": "https://github.com/capawesome-team/capacitor-app-update/issues"
   },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/capawesome-team/"
+    },
+    {
+      "type": "opencollective",
+      "url": "https://opencollective.com/capawesome"
+    }
+  ],
   "keywords": [
     "capacitor",
     "plugin",
@@ -77,5 +87,8 @@
     "android": {
       "src": "android"
     }
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
