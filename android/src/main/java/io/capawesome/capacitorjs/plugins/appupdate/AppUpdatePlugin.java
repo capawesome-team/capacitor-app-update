@@ -1,4 +1,4 @@
-package io.capawesome.capacitor.appupdate;
+package io.capawesome.capacitorjs.plugins.appupdate;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
