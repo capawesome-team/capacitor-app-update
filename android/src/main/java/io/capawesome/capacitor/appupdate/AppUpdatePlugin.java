@@ -1,4 +1,4 @@
-package dev.robingenz.capacitor.appupdate;
+package io.capawesome.capacitor.appupdate;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
