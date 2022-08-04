@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/capawesome-team/capacitor-app-update/compare/v1.3.1...v2.0.0) (2022-08-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename to `@capawesome/capacitor-app-update` (#49)
+* This plugin now only supports Capacitor 4.
+
+### Features
+
+* update to Capacitor 4 ([#48](https://github.com/capawesome-team/capacitor-app-update/issues/48)) ([ab47fa5](https://github.com/capawesome-team/capacitor-app-update/commit/ab47fa50ffc8972296b6f392666db47a172dc31a))
+
+
+* rename to `@capawesome/capacitor-app-update` ([#49](https://github.com/capawesome-team/capacitor-app-update/issues/49)) ([66c16ba](https://github.com/capawesome-team/capacitor-app-update/commit/66c16bada83bf1f7f5de62bebc3679a8241f2a94))
+
 ### [1.3.1](https://github.com/robingenz/capacitor-app-update/compare/v1.3.0...v1.3.1) (2022-01-26)
 
 
