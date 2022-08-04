@@ -100,7 +100,7 @@ const completeFlexibleUpdate = async () => {
 * [`performImmediateUpdate()`](#performimmediateupdate)
 * [`startFlexibleUpdate()`](#startflexibleupdate)
 * [`completeFlexibleUpdate()`](#completeflexibleupdate)
-* [`addListener('onFlexibleUpdateStateChange', ...)`](#addlisteneronflexibleupdatestatechange-)
+* [`addListener('onFlexibleUpdateStateChange', ...)`](#addlisteneronflexibleupdatestatechange)
 * [Interfaces](#interfaces)
 * [Enums](#enums)
 
