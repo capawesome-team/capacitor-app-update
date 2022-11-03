@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/capawesome-team/capacitor-app-update/compare/v2.0.0...v2.0.1) (2022-11-03)
+
+
+### Bug Fixes
+
+* **ios:** prevent caching of lookup requests ([#56](https://github.com/capawesome-team/capacitor-app-update/issues/56)) ([4033edd](https://github.com/capawesome-team/capacitor-app-update/commit/4033eddfe709c627f99ba5efcfbcc75441299921))
+
 ## [2.0.0](https://github.com/capawesome-team/capacitor-app-update/compare/v1.3.1...v2.0.0) (2022-08-04)
 
 
