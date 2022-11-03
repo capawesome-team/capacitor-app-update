@@ -13,17 +13,18 @@ public class AppUpdatePlugin: CAPPlugin {
     @objc func getAppUpdateInfo(_ call: CAPPluginCall) {
         DispatchQueue.global().async {
             do {
+                let date = Date.init().timeIntervalSince1970
                 guard
                     let info = Bundle.main.infoDictionary,
                     let bundleId = info["CFBundleIdentifier"] as? String,
                     let currentVersion = info["CFBundleShortVersionString"] as? String,
-                    var lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)")
+                    var lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)&date=\(date)")
                 else {
                     call.reject("Invalid bundle info provided")
                     return
                 }
                 if let country = call.getString("country") {
-                    lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)&country=\(country)")!
+                    lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)&country=\(country)&date=\(date)")!
                 }
                 let data = try Data(contentsOf: lookupUrl)
                 guard
@@ -57,16 +58,17 @@ public class AppUpdatePlugin: CAPPlugin {
     @objc func openAppStore(_ call: CAPPluginCall) {
         DispatchQueue.global().async {
             do {
+                let date = Date.init().timeIntervalSince1970
                 guard
                     let info = Bundle.main.infoDictionary,
                     let bundleId = info["CFBundleIdentifier"] as? String,
-                    var lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)")
+                    var lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)&date=\(date)")
                 else {
                     call.reject("Invalid bundle info provided")
                     return
                 }
                 if let country = call.getString("country") {
-                    lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)&country=\(country)")!
+                    lookupUrl = URL(string: "https://itunes.apple.com/lookup?bundleId=\(bundleId)&country=\(country)&date=\(date)")!
                 }
                 let data = try Data(contentsOf: lookupUrl)
                 guard
