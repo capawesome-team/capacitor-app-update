@@ -15,6 +15,8 @@ import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -41,9 +43,10 @@ public class AppUpdatePlugin extends Plugin {
     /** Update result: update info missing. */
     public static final int UPDATE_INFO_MISSING = 5;
     /** Request code for immediate update */
-    protected static final int REQUEST_IMMEDIATE_UPDATE = 10;
+    public static final int REQUEST_IMMEDIATE_UPDATE = 10;
     /** Request code for flexible update */
-    protected static final int REQUEST_FLEXIBLE_UPDATE = 11;
+    public static final int REQUEST_FLEXIBLE_UPDATE = 11;
+    public static final String ERROR_GOOGLE_PLAY_SERVICES_UNAVAILABLE = "GooglePlayServices are not available.";
     private AppUpdateManager appUpdateManager;
     private AppUpdateInfo appUpdateInfo;
     private InstallStateUpdatedListener listener;
@@ -55,6 +58,11 @@ public class AppUpdatePlugin extends Plugin {
 
     @PluginMethod
     public void getAppUpdateInfo(PluginCall call) {
+        boolean isGooglePlayServicesAvailable = this.isGooglePlayServicesAvailable();
+        if (!isGooglePlayServicesAvailable) {
+            call.reject(ERROR_GOOGLE_PLAY_SERVICES_UNAVAILABLE);
+            return;
+        }
         Task<AppUpdateInfo> appUpdateInfoTask = this.appUpdateManager.getAppUpdateInfo();
         appUpdateInfoTask.addOnSuccessListener(
             appUpdateInfo -> {
@@ -178,6 +186,12 @@ public class AppUpdatePlugin extends Plugin {
             ret.put("code", UPDATE_FAILED);
         }
         savedPluginCall.resolve(ret);
+    }
+
+    public boolean isGooglePlayServicesAvailable() {
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(bridge.getContext());
+        return resultCode == ConnectionResult.SUCCESS;
     }
 
     private PackageInfo getPackageInfo() throws PackageManager.NameNotFoundException {
