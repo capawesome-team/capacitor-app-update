@@ -9,4 +9,5 @@ CAP_PLUGIN(AppUpdatePlugin, "AppUpdate",
            CAP_PLUGIN_METHOD(performImmediateUpdate, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(startFlexibleUpdate, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(completeFlexibleUpdate, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(removeAllListeners, CAPPluginReturnNone);
 )

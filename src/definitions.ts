@@ -40,6 +40,10 @@ export interface AppUpdatePlugin {
     eventName: 'onFlexibleUpdateStateChange',
     listenerFunc: (state: FlexibleUpdateState) => void,
   ): PluginListenerHandle;
+  /**
+   * Remove all listeners for this plugin.
+   */
+  removeAllListeners(): Promise<void>;
 }
 
 export interface GetAppUpdateInfoOptions {

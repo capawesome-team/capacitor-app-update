@@ -107,6 +107,7 @@ const completeFlexibleUpdate = async () => {
 * [`startFlexibleUpdate()`](#startflexibleupdate)
 * [`completeFlexibleUpdate()`](#completeflexibleupdate)
 * [`addListener('onFlexibleUpdateStateChange', ...)`](#addlisteneronflexibleupdatestatechange)
+* [`removeAllListeners()`](#removealllisteners)
 * [Interfaces](#interfaces)
 * [Enums](#enums)
 
@@ -210,6 +211,17 @@ Only available for Android.
 | **`listenerFunc`** | <code>(state: <a href="#flexibleupdatestate">FlexibleUpdateState</a>) =&gt; void</code> |
 
 **Returns:** <code><a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+
+--------------------
+
+
+### removeAllListeners()
+
+```typescript
+removeAllListeners() => Promise<void>
+```
+
+Remove all listeners for this plugin.
 
 --------------------
 
