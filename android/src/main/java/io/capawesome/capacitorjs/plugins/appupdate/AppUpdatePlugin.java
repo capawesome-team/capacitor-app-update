@@ -12,10 +12,10 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Logger;
-import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
+import com.getcapacitor.annotation.CapacitorPlugin;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
@@ -27,7 +27,7 @@ import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
 
-@NativePlugin(name = "AppUpdate", requestCodes = { AppUpdatePlugin.REQUEST_IMMEDIATE_UPDATE, AppUpdatePlugin.REQUEST_FLEXIBLE_UPDATE })
+@CapacitorPlugin(name = "AppUpdate", requestCodes = { AppUpdatePlugin.REQUEST_IMMEDIATE_UPDATE, AppUpdatePlugin.REQUEST_FLEXIBLE_UPDATE })
 public class AppUpdatePlugin extends Plugin {
 
     public static final String TAG = "AppUpdate";
