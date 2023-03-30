@@ -11,6 +11,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import com.getcapacitor.JSObject;
+import com.getcapacitor.Logger;
 import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
@@ -29,6 +30,7 @@ import com.google.android.play.core.tasks.Task;
 @NativePlugin(name = "AppUpdate", requestCodes = { AppUpdatePlugin.REQUEST_IMMEDIATE_UPDATE, AppUpdatePlugin.REQUEST_FLEXIBLE_UPDATE })
 public class AppUpdatePlugin extends Plugin {
 
+    public static final String TAG = "AppUpdate";
     public static final String ERROR_GET_APP_INFO_FAILED = "Unable to get app info.";
     /** Update result: update ok. */
     public static final int UPDATE_OK = 0;
@@ -58,85 +60,100 @@ public class AppUpdatePlugin extends Plugin {
 
     @PluginMethod
     public void getAppUpdateInfo(PluginCall call) {
-        boolean isGooglePlayServicesAvailable = this.isGooglePlayServicesAvailable();
-        if (!isGooglePlayServicesAvailable) {
-            call.reject(ERROR_GOOGLE_PLAY_SERVICES_UNAVAILABLE);
-            return;
+        try {
+            boolean isGooglePlayServicesAvailable = this.isGooglePlayServicesAvailable();
+            if (!isGooglePlayServicesAvailable) {
+                call.reject(ERROR_GOOGLE_PLAY_SERVICES_UNAVAILABLE);
+                return;
+            }
+            Task<AppUpdateInfo> appUpdateInfoTask = this.appUpdateManager.getAppUpdateInfo();
+            appUpdateInfoTask.addOnSuccessListener(
+                appUpdateInfo -> {
+                    this.appUpdateInfo = appUpdateInfo;
+                    PackageInfo pInfo;
+                    try {
+                        pInfo = this.getPackageInfo();
+                    } catch (PackageManager.NameNotFoundException e) {
+                        call.reject(ERROR_GET_APP_INFO_FAILED);
+                        return;
+                    }
+                    JSObject ret = new JSObject();
+                    ret.put("currentVersion", String.valueOf(pInfo.versionCode));
+                    ret.put("availableVersion", String.valueOf(appUpdateInfo.availableVersionCode()));
+                    ret.put("updateAvailability", appUpdateInfo.updateAvailability());
+                    ret.put("updatePriority", appUpdateInfo.updatePriority());
+                    ret.put("immediateUpdateAllowed", appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE));
+                    ret.put("flexibleUpdateAllowed", appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE));
+                    Integer clientVersionStalenessDays = appUpdateInfo.clientVersionStalenessDays();
+                    if (clientVersionStalenessDays != null) {
+                        ret.put("clientVersionStalenessDays", clientVersionStalenessDays);
+                    }
+                    ret.put("installStatus", appUpdateInfo.installStatus());
+                    call.resolve(ret);
+                }
+            );
+            appUpdateInfoTask.addOnFailureListener(
+                failure -> {
+                    String message = failure.getMessage();
+                    call.reject(message);
+                }
+            );
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            call.reject(exception.getMessage());
         }
-        Task<AppUpdateInfo> appUpdateInfoTask = this.appUpdateManager.getAppUpdateInfo();
-        appUpdateInfoTask.addOnSuccessListener(
-            appUpdateInfo -> {
-                this.appUpdateInfo = appUpdateInfo;
-                PackageInfo pInfo;
-                try {
-                    pInfo = this.getPackageInfo();
-                } catch (PackageManager.NameNotFoundException e) {
-                    call.reject(ERROR_GET_APP_INFO_FAILED);
-                    return;
-                }
-                JSObject ret = new JSObject();
-                ret.put("currentVersion", String.valueOf(pInfo.versionCode));
-                ret.put("availableVersion", String.valueOf(appUpdateInfo.availableVersionCode()));
-                ret.put("updateAvailability", appUpdateInfo.updateAvailability());
-                ret.put("updatePriority", appUpdateInfo.updatePriority());
-                ret.put("immediateUpdateAllowed", appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE));
-                ret.put("flexibleUpdateAllowed", appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE));
-                Integer clientVersionStalenessDays = appUpdateInfo.clientVersionStalenessDays();
-                if (clientVersionStalenessDays != null) {
-                    ret.put("clientVersionStalenessDays", clientVersionStalenessDays);
-                }
-                ret.put("installStatus", appUpdateInfo.installStatus());
-                call.resolve(ret);
-            }
-        );
-        appUpdateInfoTask.addOnFailureListener(
-            failure -> {
-                String message = failure.getMessage();
-                call.reject(message);
-            }
-        );
     }
 
     @PluginMethod
     public void openAppStore(PluginCall call) {
-        String packageName = this.getContext().getPackageName();
-        Intent launchIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName));
         try {
-            this.getBridge().getActivity().startActivity(launchIntent);
-        } catch (ActivityNotFoundException ex) {
-            launchIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName));
-            this.getBridge().getActivity().startActivity(launchIntent);
+            String packageName = this.getContext().getPackageName();
+            Intent launchIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName));
+            try {
+                this.getBridge().getActivity().startActivity(launchIntent);
+            } catch (ActivityNotFoundException ex) {
+                launchIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName));
+                this.getBridge().getActivity().startActivity(launchIntent);
+            }
+            call.resolve();
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            call.reject(exception.getMessage());
         }
-        call.resolve();
     }
 
     @PluginMethod
     public void performImmediateUpdate(PluginCall call) {
-        boolean ready = this.readyForUpdate(call, AppUpdateType.IMMEDIATE);
-        if (!ready) {
-            return;
-        }
-        savedPluginCall = call;
         try {
-            this.appUpdateManager.startUpdateFlowForResult(
-                    this.appUpdateInfo,
-                    AppUpdateType.IMMEDIATE,
-                    getActivity(),
-                    AppUpdatePlugin.REQUEST_IMMEDIATE_UPDATE
-                );
-        } catch (IntentSender.SendIntentException e) {
-            call.reject(e.getMessage());
+            boolean ready = this.readyForUpdate(call, AppUpdateType.IMMEDIATE);
+            if (!ready) {
+                return;
+            }
+            savedPluginCall = call;
+            try {
+                this.appUpdateManager.startUpdateFlowForResult(
+                        this.appUpdateInfo,
+                        AppUpdateType.IMMEDIATE,
+                        getActivity(),
+                        AppUpdatePlugin.REQUEST_IMMEDIATE_UPDATE
+                    );
+            } catch (IntentSender.SendIntentException e) {
+                call.reject(e.getMessage());
+            }
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            call.reject(exception.getMessage());
         }
     }
 
     @PluginMethod
     public void startFlexibleUpdate(PluginCall call) {
-        boolean ready = this.readyForUpdate(call, AppUpdateType.FLEXIBLE);
-        if (!ready) {
-            return;
-        }
-        savedPluginCall = call;
         try {
+            boolean ready = this.readyForUpdate(call, AppUpdateType.FLEXIBLE);
+            if (!ready) {
+                return;
+            }
+            savedPluginCall = call;
             this.listener =
                 state -> {
                     int installStatus = state.installStatus();
@@ -155,40 +172,54 @@ public class AppUpdatePlugin extends Plugin {
                     getActivity(),
                     AppUpdatePlugin.REQUEST_FLEXIBLE_UPDATE
                 );
-        } catch (IntentSender.SendIntentException e) {
-            call.reject(e.getMessage());
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            call.reject(exception.getMessage());
         }
     }
 
     @PluginMethod
     public void completeFlexibleUpdate(PluginCall call) {
-        this.unregisterListener();
-        this.appUpdateManager.completeUpdate();
-        call.resolve();
+        try {
+            this.unregisterListener();
+            this.appUpdateManager.completeUpdate();
+            call.resolve();
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            call.reject(exception.getMessage());
+        }
     }
 
     @Override
     protected void handleOnActivityResult(int requestCode, int resultCode, Intent data) {
-        super.handleOnActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK && requestCode == REQUEST_FLEXIBLE_UPDATE) {
-            this.unregisterListener();
+        try {
+            super.handleOnActivityResult(requestCode, resultCode, data);
+            if (resultCode != RESULT_OK && requestCode == REQUEST_FLEXIBLE_UPDATE) {
+                this.unregisterListener();
+            }
+            this.appUpdateInfo = null;
+            if (savedPluginCall == null) {
+                return;
+            }
+            JSObject ret = new JSObject();
+            if (resultCode == RESULT_OK) {
+                ret.put("code", UPDATE_OK);
+            } else if (resultCode == RESULT_CANCELED) {
+                ret.put("code", UPDATE_CANCELED);
+            } else if (resultCode == RESULT_IN_APP_UPDATE_FAILED) {
+                ret.put("code", UPDATE_FAILED);
+            }
+            savedPluginCall.resolve(ret);
+        } catch (Exception exception) {
+            Logger.error(TAG, exception.getMessage(), exception);
+            if (savedPluginCall == null) {
+                return;
+            }
+            savedPluginCall.reject(exception.getMessage());
         }
-        this.appUpdateInfo = null;
-        if (savedPluginCall == null) {
-            return;
-        }
-        JSObject ret = new JSObject();
-        if (resultCode == RESULT_OK) {
-            ret.put("code", UPDATE_OK);
-        } else if (resultCode == RESULT_CANCELED) {
-            ret.put("code", UPDATE_CANCELED);
-        } else if (resultCode == RESULT_IN_APP_UPDATE_FAILED) {
-            ret.put("code", UPDATE_FAILED);
-        }
-        savedPluginCall.resolve(ret);
     }
 
-    public boolean isGooglePlayServicesAvailable() {
+    private boolean isGooglePlayServicesAvailable() {
         GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
         int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(bridge.getContext());
         return resultCode == ConnectionResult.SUCCESS;
