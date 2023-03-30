@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.1](https://github.com/capawesome-team/capacitor-app-update/compare/v2.1.0...v2.1.1) (2023-03-30)
+
+
+### Bug Fixes
+
+* **android:** catch native errors ([beb8070](https://github.com/capawesome-team/capacitor-app-update/commit/beb8070581a67df2a360a8a694c0ecf8b1d97b36))
+* **android:** check if Google Play Services are available ([#64](https://github.com/capawesome-team/capacitor-app-update/issues/64)) ([e336da9](https://github.com/capawesome-team/capacitor-app-update/commit/e336da9b2256fcbba96391ea765974d8c7da51cb))
+* **android:** replace deprecated `NativePlugin` ([5330f2c](https://github.com/capawesome-team/capacitor-app-update/commit/5330f2c7c5deb8a7c9878267a22e6ea7f5d7c1bb))
+
 ## [2.1.0](https://github.com/capawesome-team/capacitor-app-update/compare/v2.0.1...v2.1.0) (2023-01-21)
 
 
